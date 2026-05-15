@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sec+ 701">
+<meta name="theme-color" content="#0a0e1a">
+<title>Sec+ SY0-701 Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-elev: #131825;
+    --bg-elev-2: #1c2233;
+    --border: #2a3142;
+    --text: #e8ecf4;
+    --text-dim: #8993a8;
+    --text-faint: #5a647a;
+    --accent: #ffb84d;        /* amber */
+    --accent-deep: #d68f1f;
+    --green: #5dd39e;
+    --red: #ff6b7a;
+    --blue: #7bb8ff;
+    --purple: #b58dff;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at top, rgba(255,184,77,0.06), transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(123,184,255,0.04), transparent 50%);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 16px; padding-top: max(16px, env(safe-area-inset-top)); }
+
+  /* Header */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800; font-size: 1.6rem; margin: 0;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .brand .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; color: var(--text-faint);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .stats-mini {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: var(--text-dim); text-align: right;
+  }
+  .stats-mini b { color: var(--accent); }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 4px; margin-bottom: 24px;
+    background: var(--bg-elev); padding: 4px;
+    border-radius: 12px; border: 1px solid var(--border);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 1; min-width: max-content;
+    padding: 10px 14px;
+    background: transparent; border: none; cursor: pointer;
+    color: var(--text-dim); font-family: inherit; font-size: 0.85rem;
+    font-weight: 500; border-radius: 8px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    background: var(--bg-elev-2); color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--border);
+  }
+
+  /* Panels */
+  .panel { display: none; animation: fadeIn 0.25s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cards */
+  .card {
+    background: var(--bg-elev); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .card h2 {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    margin: 0 0 12px; font-size: 1.3rem; letter-spacing: -0.01em;
+  }
+  .card h3 {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    margin: 0 0 8px; font-size: 1rem;
+  }
+  .card p { color: var(--text-dim); margin: 0 0 12px; font-size: 0.95rem; }
+
+  /* Buttons */
+  button.btn {
+    background: var(--accent); color: #1a1208;
+    border: none; padding: 12px 18px; border-radius: 10px;
+    font-family: inherit; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; transition: all 0.15s ease;
+    width: 100%; margin-top: 4px;
+  }
+  button.btn:hover { background: var(--accent-deep); }
+  button.btn:active { transform: translateY(1px); }
+  button.btn.secondary {
+    background: var(--bg-elev-2); color: var(--text);
+    border: 1px solid var(--border);
+  }
+  button.btn.secondary:hover { background: var(--border); }
+  button.btn.danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
+
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-row .btn { flex: 1; min-width: 120px; }
+
+  /* Mode buttons grid */
+  .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .mode-btn {
+    background: var(--bg-elev); border: 1px solid var(--border);
+    padding: 18px; border-radius: 12px; cursor: pointer;
+    text-align: left; transition: all 0.15s ease;
+    color: var(--text); font-family: inherit;
+  }
+  .mode-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .mode-btn .icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+  .mode-btn .title { font-weight: 600; font-size: 1rem; margin-bottom: 4px; display: block; }
+  .mode-btn .desc { color: var(--text-dim); font-size: 0.8rem; display: block; }
+
+  /* Domain selector */
+  .domain-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .domain-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px; background: var(--bg-elev-2);
+    border: 1px solid var(--border); border-radius: 10px;
+    cursor: pointer; transition: all 0.15s ease;
+  }
+  .domain-item:hover { border-color: var(--accent); }
+  .domain-item input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); }
+  .domain-item .domain-label { flex: 1; }
+  .domain-item .domain-name { font-weight: 500; font-size: 0.9rem; }
+  .domain-item .domain-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; color: var(--text-faint);
+  }
+
+  /* Quiz UI */
+  .question-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; color: var(--text-faint);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    display: flex; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .question-text {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: 1.15rem; line-height: 1.5;
+    margin-bottom: 20px; color: var(--text);
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px; background: var(--bg-elev-2);
+    border: 1px solid var(--border); border-radius: 10px;
+    cursor: pointer; transition: all 0.15s ease;
+    font-size: 0.95rem;
+  }
+  .option:hover:not(.locked) { border-color: var(--accent); background: rgba(255,184,77,0.05); }
+  .option .letter {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    color: var(--accent); min-width: 20px;
+  }
+  .option .opt-text { flex: 1; }
+  .option.correct { border-color: var(--green); background: rgba(93,211,158,0.1); }
+  .option.correct .letter { color: var(--green); }
+  .option.wrong { border-color: var(--red); background: rgba(255,107,122,0.08); }
+  .option.wrong .letter { color: var(--red); }
+  .option.locked { cursor: default; }
+
+  /* Explanation */
+  .explanation {
+    margin-top: 20px; padding: 16px; background: var(--bg-elev-2);
+    border-left: 3px solid var(--accent); border-radius: 8px;
+    font-size: 0.92rem;
+  }
+  .explanation strong { color: var(--accent); font-weight: 600; }
+  .explanation .label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--text-faint); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .explanation .why-wrong {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed var(--border);
+    color: var(--text-dim);
+  }
+  .explanation .why-wrong b { color: var(--text); }
+
+  /* Progress bar */
+  .progress {
+    height: 4px; background: var(--bg-elev-2);
+    border-radius: 2px; overflow: hidden; margin-bottom: 16px;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+    transition: width 0.3s ease;
+  }
+
+  /* Flashcard */
+  .flashcard {
+    perspective: 1500px; min-height: 280px;
+    margin-bottom: 16px;
+  }
+  .flashcard-inner {
+    position: relative; width: 100%; min-height: 280px;
+    transition: transform 0.6s; transform-style: preserve-3d;
+  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-face {
+    position: absolute; width: 100%; min-height: 280px;
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    background: var(--bg-elev); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px;
+    display: flex; flex-direction: column; justify-content: center;
+    box-shadow: var(--shadow); cursor: pointer;
+  }
+  .flashcard-face.back { transform: rotateY(180deg); }
+  .flashcard-term {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem; font-weight: 700; color: var(--accent);
+    text-align: center; letter-spacing: -0.01em;
+  }
+  .flashcard-def {
+    font-family: 'Fraunces', serif; font-size: 1.1rem;
+    line-height: 1.5; text-align: center;
+  }
+  .flashcard-hint {
+    position: absolute; bottom: 12px; left: 0; right: 0;
+    text-align: center; font-size: 0.7rem; color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em;
+  }
+  .flashcard-domain {
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--text-faint);
+  }
+
+  /* Results */
+  .score-display {
+    text-align: center; padding: 24px 0;
+  }
+  .score-num {
+    font-family: 'Fraunces', serif; font-weight: 800;
+    font-size: 4rem; line-height: 1;
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .score-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .score-detail {
+    margin-top: 16px; font-size: 0.95rem; color: var(--text-dim);
+  }
+  .score-detail span { color: var(--text); font-weight: 600; }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px; margin-top: 12px;
+  }
+  .stat-box {
+    background: var(--bg-elev-2); padding: 14px;
+    border: 1px solid var(--border); border-radius: 10px;
+    text-align: center;
+  }
+  .stat-box .stat-num {
+    font-family: 'Fraunces', serif; font-weight: 700;
+    font-size: 1.6rem; color: var(--accent);
+  }
+  .stat-box .stat-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--text-faint); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-top: 4px;
+  }
+
+  /* Concept page */
+  .concept-section { margin-bottom: 20px; }
+  .concept-section h3 {
+    color: var(--accent); margin-bottom: 8px;
+    font-family: 'Fraunces', serif; font-size: 1.1rem;
+  }
+  .concept-section ul { padding-left: 20px; margin: 8px 0; }
+  .concept-section li { margin-bottom: 6px; font-size: 0.93rem; color: var(--text); }
+  .concept-section li b { color: var(--accent); }
+  .domain-pill {
+    display: inline-block; padding: 4px 10px;
+    background: rgba(255,184,77,0.12); color: var(--accent);
+    border-radius: 12px; font-size: 0.72rem;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  /* Concept browser */
+  .concept-list { display: flex; flex-direction: column; gap: 8px; }
+  .concept-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px; background: var(--bg-elev-2);
+    border: 1px solid var(--border); border-radius: 10px;
+    cursor: pointer; transition: all 0.15s ease;
+  }
+  .concept-item:hover { border-color: var(--accent); }
+  .concept-item .concept-name { font-weight: 500; }
+  .concept-item .concept-domain {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--text-faint);
+  }
+
+  /* Inputs */
+  select, input[type=number] {
+    width: 100%; padding: 10px; background: var(--bg-elev-2);
+    border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text); font-family: inherit; font-size: 0.9rem;
+  }
+  label { display: block; margin: 12px 0 6px;
+    font-size: 0.85rem; color: var(--text-dim); }
+
+  /* Footer */
+  footer {
+    text-align: center; margin-top: 40px; padding: 16px;
+    font-size: 0.75rem; color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  footer a { color: var(--text-dim); }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .container { padding: 12px; }
+    header { margin-bottom: 16px; padding-bottom: 12px; }
+    .brand h1 { font-size: 1.3rem; }
+    .card { padding: 16px; }
+    .question-text { font-size: 1.05rem; }
+    .flashcard-term { font-size: 1.5rem; }
+    .score-num { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="brand">
+    <h1>Sec+ 701</h1>
+    <span class="tag">// study deck</span>
+  </div>
+  <div class="stats-mini" id="statsMini">
+    <b id="totalAnswered">0</b> answered · <b id="accuracy">—</b>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-panel="home">Home</button>
+  <button class="tab" data-panel="quiz">Quiz</button>
+  <button class="tab" data-panel="flashcards">Flashcards</button>
+  <button class="tab" data-panel="concepts">Concepts</button>
+  <button class="tab" data-panel="stats">Stats</button>
+</nav>
+
+<!-- HOME PANEL -->
+<section class="panel active" id="panel-home">
+  <div class="card">
+    <h2>Welcome back</h2>
+    <p>Based on Professor Messer's SY0-701 course notes and practice exams. Pick a study mode to get started.</p>
+    <div class="mode-grid">
+      <button class="mode-btn" data-quick="quiz-all">
+        <span class="icon">🎯</span>
+        <span class="title">Random Quiz</span>
+        <span class="desc">10 questions, all domains</span>
+      </button>
+      <button class="mode-btn" data-quick="quiz-weak">
+        <span class="icon">🔥</span>
+        <span class="title">Weak Spots</span>
+        <span class="desc">Re-drill what you missed</span>
+      </button>
+      <button class="mode-btn" data-quick="flash">
+        <span class="icon">⚡</span>
+        <span class="title">Flashcards</span>
+        <span class="desc">Acronyms & key terms</span>
+      </button>
+      <button class="mode-btn" data-quick="exam">
+        <span class="icon">📝</span>
+        <span class="title">Full Exam</span>
+        <span class="desc">90 questions, 90 min</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Exam Blueprint</h3>
+    <p>SY0-701 weightings (use this to prioritize study time):</p>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.9;">
+      <div>1.0 General Security Concepts ········· <b style="color:var(--accent)">12%</b></div>
+      <div>2.0 Threats, Vulnerabilities & Mitig. ··· <b style="color:var(--accent)">22%</b></div>
+      <div>3.0 Security Architecture ··············· <b style="color:var(--accent)">18%</b></div>
+      <div>4.0 Security Operations ················ <b style="color:var(--accent)">28%</b></div>
+      <div>5.0 Program Mgmt & Oversight ····· <b style="color:var(--accent)">20%</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ PANEL -->
+<section class="panel" id="panel-quiz">
+  <div id="quiz-setup">
+    <div class="card">
+      <h2>Quiz Setup</h2>
+      <p>Pick which domains you want to focus on, then how many questions.</p>
+
+      <div class="domain-list" id="domainList"></div>
+
+      <label for="numQuestions">Number of questions</label>
+      <select id="numQuestions">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="90">90 (full exam length)</option>
+      </select>
+
+      <label for="modeSel">Mode</label>
+      <select id="modeSel">
+        <option value="study">Study (instant feedback)</option>
+        <option value="exam">Exam (no feedback until end)</option>
+        <option value="weak">Missed-only (re-drill)</option>
+      </select>
+
+      <div style="margin-top: 16px;">
+        <button class="btn" id="startQuizBtn">Start Quiz →</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-active" style="display:none;">
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="card">
+      <div class="question-meta">
+        <span id="qNum">Question 1/10</span>
+        <span id="qDomain">Domain</span>
+      </div>
+      <div class="question-text" id="qText"></div>
+      <div class="options" id="qOptions"></div>
+      <div id="qExplanation" style="display:none;"></div>
+      <div style="margin-top: 16px; display: flex; gap: 8px;">
+        <button class="btn secondary" id="quitQuizBtn" style="flex: 0 0 auto; width: auto;">Quit</button>
+        <button class="btn" id="nextQBtn" style="display:none;">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-results" style="display:none;">
+    <div class="card">
+      <div class="score-display">
+        <div class="score-num" id="resultScore">0%</div>
+        <div class="score-label">Score</div>
+        <div class="score-detail">
+          <span id="resultCorrect">0</span> correct of <span id="resultTotal">0</span> ·
+          <span id="resultPace">—</span> avg/question
+        </div>
+      </div>
+      <div class="stats-grid" id="resultBreakdown"></div>
+      <div style="margin-top: 16px;" class="btn-row">
+        <button class="btn" id="reviewMissedBtn">Review Missed</button>
+        <button class="btn secondary" id="newQuizBtn">New Quiz</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLASHCARDS PANEL -->
+<section class="panel" id="panel-flashcards">
+  <div class="card">
+    <h2>Flashcards</h2>
+    <p>Tap the card to flip. Use the buttons below to mark how well you knew it.</p>
+
+    <label for="flashCat">Category</label>
+    <select id="flashCat">
+      <option value="all">All acronyms</option>
+      <option value="crypto">Cryptography & PKI</option>
+      <option value="iam">Identity & Access (IAM)</option>
+      <option value="network">Networking & Protocols</option>
+      <option value="threats">Threats & Attacks</option>
+      <option value="grc">Risk & Compliance (GRC)</option>
+      <option value="concepts">Key Concepts (not acronyms)</option>
+    </select>
+
+    <button class="btn" id="startFlashBtn" style="margin-top: 12px;">Start →</button>
+  </div>
+
+  <div id="flash-active" style="display:none;">
+    <div class="question-meta" style="padding: 0 4px;">
+      <span id="flashNum">Card 1/30</span>
+      <span id="flashCatLabel">All</span>
+    </div>
+    <div class="flashcard" id="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-face front">
+          <div class="flashcard-domain" id="flashDom"></div>
+          <div class="flashcard-term" id="flashFront"></div>
+          <div class="flashcard-hint">TAP TO FLIP</div>
+        </div>
+        <div class="flashcard-face back">
+          <div class="flashcard-def" id="flashBack"></div>
+          <div class="flashcard-hint">TAP TO FLIP</div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn danger" id="flashHardBtn">😓 Hard</button>
+      <button class="btn secondary" id="flashOkBtn">🤔 Okay</button>
+      <button class="btn" id="flashEasyBtn">😎 Easy</button>
+    </div>
+    <button class="btn secondary" id="quitFlashBtn" style="margin-top: 8px;">Exit deck</button>
+  </div>
+</section>
+
+<!-- CONCEPTS PANEL -->
+<section class="panel" id="panel-concepts">
+  <div class="card">
+    <h2>Concept Deep-Dives</h2>
+    <p>Quick reference for high-yield exam topics from Professor Messer's notes.</p>
+    <div class="concept-list" id="conceptList"></div>
+  </div>
+  <div id="conceptDetail" style="display:none;"></div>
+</section>
+
+<!-- STATS PANEL -->
+<section class="panel" id="panel-stats">
+  <div class="card">
+    <h2>Your Progress</h2>
+    <div class="stats-grid" id="statsGrid"></div>
+  </div>
+  <div class="card">
+    <h3>By Domain</h3>
+    <div id="domainStats"></div>
+  </div>
+  <div class="card">
+    <h3>Reset</h3>
+    <p>Clear all your study progress and start fresh.</p>
+    <button class="btn danger" id="resetBtn">Reset all progress</button>
+  </div>
+</section>
+
+<footer>
+  Content adapted from Professor Messer's SY0-701 Course Notes v107 &amp; Practice Exams v1.8.<br>
+  Built for personal study use. <a href="https://www.professormesser.com" target="_blank">professormesser.com</a>
+</footer>
+
+</div>
+
+<script>
+/* ============================================================
+   QUESTION BANK — sourced from Professor Messer SY0-701 materials
+   ============================================================ */
+
+const DOMAINS = {
+  '1': { name: '1.0 General Security Concepts', weight: 12 },
+  '2': { name: '2.0 Threats, Vulnerabilities & Mitigations', weight: 22 },
+  '3': { name: '3.0 Security Architecture', weight: 18 },
+  '4': { name: '4.0 Security Operations', weight: 28 },
+  '5': { name: '5.0 Program Management & Oversight', weight: 20 }
+};
+
+const QUESTIONS = [
+  // ===== DOMAIN 1.0 — GENERAL SECURITY CONCEPTS =====
+  {
+    id: 'q001', domain: '1', topic: 'CIA Triad',
+    text: 'A company automatically adds a digital signature to each outgoing email message. Which principle of the CIA triad does this BEST support?',
+    options: ['Confidentiality', 'Integrity', 'Authentication', 'Availability'],
+    answer: 1,
+    explanation: 'A digital signature lets the recipient verify the message has not been changed since signing, which is the definition of integrity.',
+    distractors: {
+      0: 'Confidentiality is about preventing disclosure — encryption, not signatures.',
+      2: 'Authentication verifies identity; digital signatures help with integrity and non-repudiation, but the question asks about a CIA-triad principle.',
+      3: 'Availability is about systems being up and reachable.'
+    }
+  },
+  {
+    id: 'q002', domain: '1', topic: 'Control Categories',
+    text: 'A company installs a generator to run their data center when the power goes out. Which type of control is this?',
+    options: ['Preventive', 'Detective', 'Corrective', 'Compensating'],
+    answer: 2,
+    explanation: 'A corrective control acts after an event to restore operations. A generator activates after a power loss to bring systems back — that is corrective.',
+    distractors: {
+      0: 'Preventive controls stop an event before it happens (firewalls, locks).',
+      1: 'Detective controls identify and alert on events (IDS, motion sensors).',
+      3: 'Compensating is when existing controls are insufficient and you substitute another control — close, but a generator is squarely corrective here.'
+    }
+  },
+  {
+    id: 'q003', domain: '1', topic: 'Non-repudiation',
+    text: 'Which technology MOST directly provides non-repudiation for an email?',
+    options: ['AES-256 encryption', 'A digital signature', 'TLS in transit', 'MAC address filtering'],
+    answer: 1,
+    explanation: 'A digital signature is created with the sender\'s private key. Only that key holder could have produced it, so the sender cannot later deny sending — that is non-repudiation.',
+    distractors: {
+      0: 'AES is symmetric encryption: both parties share the key, so it cannot prove who sent.',
+      2: 'TLS protects data in transit (confidentiality + integrity), not sender identity in a way the receiver can prove to a third party.',
+      3: 'MAC filtering controls network access; unrelated.'
+    }
+  },
+  {
+    id: 'q004', domain: '1', topic: 'Gap Analysis',
+    text: 'A company\'s CISO wants a formal comparison between their current security posture and the level the company wants to reach. Which of the following BEST describes this?',
+    options: ['Gap analysis', 'Policy administrator', 'Change management', 'Dependency list'],
+    answer: 0,
+    explanation: 'A gap analysis is a formal process that compares current state to desired state across many aspects of the security environment.',
+    distractors: {
+      1: 'The Policy Administrator is a zero-trust component that issues access tokens — unrelated.',
+      2: 'Change management governs how changes are deployed, not where you stand vs. where you want to be.',
+      3: 'A dependency list maps what relies on what for change planning.'
+    }
+  },
+  {
+    id: 'q005', domain: '1', topic: 'Zero Trust',
+    text: 'Which two planes make up the zero trust architecture model?',
+    options: ['Control plane and data plane', 'Trust plane and verify plane', 'Internal plane and external plane', 'User plane and device plane'],
+    answer: 0,
+    explanation: 'Zero trust separates the control plane (where access decisions are made — Policy Engine, Policy Administrator) from the data plane (where the actual data traffic flows through the Policy Enforcement Point).',
+    distractors: {
+      1: 'Not real zero-trust terminology.',
+      2: 'Network segmentation, not zero trust.',
+      3: 'Both users and devices are subjects in zero trust, but those are not the two planes.'
+    }
+  },
+  {
+    id: 'q006', domain: '1', topic: 'Authentication factors',
+    text: 'A user logs in with a fingerprint and a one-time code from their phone. Which factor combination is this?',
+    options: ['Something you know + something you have', 'Something you are + something you have', 'Something you have + somewhere you are', 'Something you are + something you know'],
+    answer: 1,
+    explanation: 'A fingerprint = something you ARE (biometric). A code from a phone = something you HAVE (the phone). Together: are + have.',
+    distractors: {
+      0: 'Something you know would be a password or PIN — no password here.',
+      2: 'Somewhere you are is location-based (GPS, IP geolocation), not used here.',
+      3: 'Nothing in the question is "something you know."'
+    }
+  },
+
+  // ===== DOMAIN 2.0 — THREATS, VULNERABILITIES & MITIGATIONS =====
+  {
+    id: 'q007', domain: '2', topic: 'Phishing variants',
+    text: 'A remote user receives a text message with a link asking them to log in and confirm their upcoming work schedule. Which attack BEST describes this?',
+    options: ['Brute force', 'Watering hole', 'Typosquatting', 'Smishing'],
+    answer: 3,
+    explanation: 'Smishing is SMS phishing — social engineering delivered via text message asking for sensitive information.',
+    distractors: {
+      0: 'Brute force tries many password combinations — no password here.',
+      1: 'A watering hole infects a third-party site the victim visits; not a text message.',
+      2: 'Typosquatting uses misspelled domains; nothing about a misspelled URL here.'
+    }
+  },
+  {
+    id: 'q008', domain: '2', topic: 'Threat actors',
+    text: 'Which threat actor is MOST likely to attack systems for direct financial gain?',
+    options: ['Organized crime', 'Hacktivist', 'Nation state', 'Shadow IT'],
+    answer: 0,
+    explanation: 'Organized crime is motivated primarily by money — ransomware, banking trojans, credit card theft.',
+    distractors: {
+      1: 'Hacktivists are driven by political or social causes.',
+      2: 'Nation states pursue espionage, IP theft, and disruption — strategic, not direct profit.',
+      3: 'Shadow IT is unauthorized internal use of tech; not malicious in intent.'
+    }
+  },
+  {
+    id: 'q009', domain: '2', topic: 'DDoS',
+    text: 'An attacker disables a server by sending specially crafted packets from many remote devices, causing it to crash and require a reboot. Which BEST describes this attack?',
+    options: ['Privilege escalation', 'SQL injection', 'Replay attack', 'DDoS'],
+    answer: 3,
+    explanation: 'Distributed Denial of Service uses many remote devices (often a botnet) to overwhelm or crash a target.',
+    distractors: {
+      0: 'Privilege escalation is gaining higher rights within a system already breached.',
+      1: 'SQL injection targets databases through input fields.',
+      2: 'Replay attacks re-send captured authentication traffic.'
+    }
+  },
+  {
+    id: 'q010', domain: '2', topic: 'Default credentials',
+    text: 'An attacker scans a corporate network and finds devices that log in with username "admin" and password "admin." Which of the following BEST describes this issue?',
+    options: ['Open service ports', 'Default credentials', 'Unsupported systems', 'Phishing'],
+    answer: 1,
+    explanation: 'Devices ship with default credentials; if administrators never change them, anyone who looks up the defaults can log in.',
+    distractors: {
+      0: 'Open ports are needed for service access; they\'re not why "admin/admin" worked.',
+      2: 'Unsupported systems are out of vendor support; unrelated to default passwords.',
+      3: 'Phishing would have tricked someone into revealing real credentials.'
+    }
+  },
+  {
+    id: 'q011', domain: '2', topic: 'Race conditions',
+    text: 'A time clock\'s embedded OS resets the file system on error and reboots. A file system error during startup causes it to constantly reboot. Which BEST describes this?',
+    options: ['Memory injection', 'Resource consumption', 'Race condition', 'Malicious update'],
+    answer: 2,
+    explanation: 'Two processes are racing: the repair, and the reboot. The reboot wins before the repair completes, so the system never stabilizes.',
+    distractors: {
+      0: 'Memory injection is malicious code added to a running process.',
+      1: 'Resource consumption (out of disk, RAM) would manifest differently.',
+      2: '',
+      3: 'A malicious update is an attacker-supplied patch — the question doesn\'t indicate that.'
+    }
+  },
+  {
+    id: 'q012', domain: '2', topic: 'Watering hole',
+    text: 'A security administrator attends an annual industry convention with other security pros from around the world. Which attack would be MOST likely in this setting?',
+    options: ['Smishing', 'Supply chain', 'SQL injection', 'Watering hole'],
+    answer: 3,
+    explanation: 'A watering hole attack targets a third-party site the intended victims frequent. Conference attendee pages, vendor sites, or hotel Wi-Fi pages are perfect watering holes for a niche group like security professionals.',
+    distractors: {
+      0: 'Smishing is mass-targeting via text — not specifically tied to an event.',
+      1: 'Supply chain attacks compromise vendors/manufacturers in the product chain.',
+      2: 'SQL injection targets web app input fields, not attendees.'
+    }
+  },
+  {
+    id: 'q013', domain: '2', topic: 'On-path attack',
+    text: 'An attacker secretly intercepts and modifies traffic between two parties without either knowing. Which attack BEST describes this?',
+    options: ['Replay', 'On-path', 'DNS poisoning', 'Brute force'],
+    answer: 1,
+    explanation: 'An on-path attack (formerly "man-in-the-middle") inserts the attacker between two parties to read or modify traffic in real time.',
+    distractors: {
+      0: 'Replay captures legitimate traffic and re-sends it later; no modification needed.',
+      2: 'DNS poisoning redirects name resolution; it can enable on-path but is not the same thing.',
+      3: 'Brute force is password guessing.'
+    }
+  },
+  {
+    id: 'q014', domain: '2', topic: 'Misinformation',
+    text: 'An attacker creates many social media accounts and posts coordinated content to influence public opinion on a political issue. Which BEST describes this?',
+    options: ['On-path', 'Watering hole', 'Misinformation campaign', 'Phishing'],
+    answer: 2,
+    explanation: 'A misinformation/disinformation campaign uses social and traditional media to spread false or misleading content, often by nation-state actors aiming to divide, distract, or persuade.',
+    distractors: {
+      0: 'On-path requires intercepting traffic between specific parties.',
+      1: 'Watering hole compromises a third-party site to infect its visitors.',
+      3: 'Phishing extracts sensitive info from individuals.'
+    }
+  },
+  {
+    id: 'q015', domain: '2', topic: 'Memory injection',
+    text: 'Malware running on a Windows host adds malicious code to the memory space of the explorer.exe process. Which technique is this?',
+    options: ['Buffer overflow', 'Memory injection', 'Race condition', 'Privilege escalation'],
+    answer: 1,
+    explanation: 'Memory injection inserts malicious code into the memory of a legitimate, running process — letting the malware operate with that process\'s context and evading some detection.',
+    distractors: {
+      0: 'Buffer overflow writes data past an allocated buffer to corrupt adjacent memory — related but different.',
+      2: 'Race conditions exploit timing between two operations.',
+      3: 'Privilege escalation is gaining higher rights, which may or may not use memory injection.'
+    }
+  },
+  {
+    id: 'q016', domain: '2', topic: 'Hardening',
+    text: 'A security team disables unnecessary services, removes unused accounts, and applies a CIS benchmark to a new server before deploying it. Which BEST describes this process?',
+    options: ['Patch management', 'Hardening', 'Vulnerability scanning', 'Tokenization'],
+    answer: 1,
+    explanation: 'Hardening reduces the attack surface by removing or disabling everything not needed and applying a secure baseline (often from CIS, DISA STIG, or vendor benchmarks).',
+    distractors: {
+      0: 'Patch management is keeping software updated — part of, but not the same as, hardening.',
+      2: 'Vulnerability scanning finds existing flaws; it doesn\'t fix them.',
+      3: 'Tokenization replaces sensitive data with non-sensitive substitutes.'
+    }
+  },
+
+  // ===== DOMAIN 3.0 — SECURITY ARCHITECTURE =====
+  {
+    id: 'q017', domain: '3', topic: 'Jump server',
+    text: 'A managed service provider technician needs CLI access to internal routers, switches, and firewalls on a third-party private network. Which provides the necessary access?',
+    options: ['HSM', 'Jump server', 'NAC', 'Air gap'],
+    answer: 1,
+    explanation: 'A jump server (jump host) is a hardened, single-entry-point system used to access secured networks. The tech connects to it via SSH or VPN, then jumps onward to internal devices.',
+    distractors: {
+      0: 'An HSM (Hardware Security Module) handles cryptographic key storage and operations.',
+      2: 'NAC (Network Access Control) gates devices based on a posture check.',
+      3: 'An air gap is physical isolation — the opposite of providing access.'
+    }
+  },
+  {
+    id: 'q018', domain: '3', topic: 'Containerization',
+    text: 'A company wants to deploy applications securely without the overhead of a full VM per app. Which is BEST?',
+    options: ['Containerization', 'IoT', 'Proxy', 'RTOS'],
+    answer: 0,
+    explanation: 'Containers (Docker, Kubernetes) share the host OS kernel while isolating apps and their dependencies — far less overhead than a full VM per app.',
+    distractors: {
+      1: 'IoT refers to embedded/connected devices, not deployment models.',
+      2: 'A proxy intermediates traffic; it is not a deployment model.',
+      3: 'An RTOS is a real-time OS for time-critical embedded use.'
+    }
+  },
+  {
+    id: 'q019', domain: '3', topic: 'MTBF',
+    text: 'A manufacturer states that new wireless APs will average 100,000 hours before a hardware failure. Which term describes this estimate?',
+    options: ['MTTR', 'RPO', 'RTO', 'MTBF'],
+    answer: 3,
+    explanation: 'MTBF (Mean Time Between Failures) is the expected average time between failures for repairable equipment, usually computed from component reliability.',
+    distractors: {
+      0: 'MTTR is Mean Time to Repair — how long to fix something.',
+      1: 'RPO is the maximum acceptable data loss measured in time.',
+      2: 'RTO is the maximum acceptable downtime to restore service.'
+    }
+  },
+  {
+    id: 'q020', domain: '3', topic: 'RPO vs RTO',
+    text: 'A finance company decides they can lose at most 15 minutes of transaction data in a disaster. Which metric does the "15 minutes" define?',
+    options: ['RTO', 'RPO', 'MTTR', 'MTBF'],
+    answer: 1,
+    explanation: 'RPO (Recovery Point Objective) is the maximum acceptable data loss measured backward in time from the moment of disruption. 15 minutes of acceptable data loss = RPO of 15 minutes.',
+    distractors: {
+      0: 'RTO is the maximum downtime allowed — how long to come back up, not how much data can be lost.',
+      2: 'MTTR is the average time to repair a system.',
+      3: 'MTBF is time between failures.'
+    }
+  },
+  {
+    id: 'q021', domain: '3', topic: 'Cloud responsibility',
+    text: 'A company moves a web app to a SaaS provider. Which of the following is the SaaS customer typically responsible for?',
+    options: ['Patching the underlying OS', 'Configuring access for their users and data', 'Maintaining hypervisor security', 'Replacing failed hardware'],
+    answer: 1,
+    explanation: 'In SaaS, the provider handles the infrastructure, OS, runtime, and application. The customer is responsible mainly for their data, user accounts, and access configuration.',
+    distractors: {
+      0: 'OS patching is the SaaS provider\'s job.',
+      2: 'Hypervisor security is the provider\'s job (it\'s their infrastructure).',
+      3: 'Physical hardware is fully the provider\'s responsibility.'
+    }
+  },
+  {
+    id: 'q022', domain: '3', topic: 'Honeypot',
+    text: 'A security administrator deploys a virtual machine in a screened subnet with a guest login account and no password. What is the MOST likely reason?',
+    options: ['It is a honeypot to attract attackers', 'It is cloud storage for remote users', 'It is a VPN concentrator', 'It is a development sandbox'],
+    answer: 0,
+    explanation: 'Easy-to-find, easy-to-access systems in a DMZ-style subnet are classic honeypots: lure the attacker in, watch their techniques, gather intel.',
+    distractors: {
+      1: 'Cloud storage requires authentication and meaningful resources, not a wide-open guest login.',
+      2: 'A VPN concentrator would never have a no-password guest account exposed.',
+      3: 'A sandbox is typically isolated for development — not configured to look attractive to attackers.'
+    }
+  },
+  {
+    id: 'q023', domain: '3', topic: 'Stateful vs stateless firewall',
+    text: 'Which type of firewall tracks the state of open TCP connections so that return traffic is automatically permitted without explicit rules?',
+    options: ['Stateless packet filter', 'Stateful firewall', 'Application proxy', 'Air gap'],
+    answer: 1,
+    explanation: 'A stateful firewall maintains a connection table. When you allow outbound, the return traffic for that established session is permitted automatically — no separate inbound rule needed.',
+    distractors: {
+      0: 'A stateless filter inspects each packet in isolation; you must explicitly allow both directions.',
+      2: 'Application proxies operate at L7 and intermediate the full session, but the question asks specifically about state tracking.',
+      3: 'An air gap is physical separation, not a firewall.'
+    }
+  },
+  {
+    id: 'q024', domain: '3', topic: 'Backup types',
+    text: 'A nightly backup strategy captures only files that have changed since the LAST FULL backup. Which type of backup is this?',
+    options: ['Incremental', 'Differential', 'Snapshot', 'Synthetic full'],
+    answer: 1,
+    explanation: 'A differential backup captures everything changed since the last full backup. Files grow each night until the next full. Restore = full + latest differential.',
+    distractors: {
+      0: 'Incremental captures changes since the last backup of any type — smallest each night, but restore requires the full plus all incrementals.',
+      2: 'A snapshot captures a point-in-time state, often at the storage level.',
+      3: 'A synthetic full is a full image built from prior incrementals without re-reading the source.'
+    }
+  },
+
+  // ===== DOMAIN 4.0 — SECURITY OPERATIONS =====
+  {
+    id: 'q025', domain: '4', topic: 'DLP',
+    text: 'A manufacturing company prohibits transmitting customer information. A security administrator gets an alert that credit card numbers were sent as an email attachment. What MOST likely generated the alert?',
+    options: ['IPS', 'DLP', 'RADIUS', 'IPsec'],
+    answer: 1,
+    explanation: 'DLP (Data Loss Prevention) inspects content for patterns like credit card numbers, SSNs, or classified labels and alerts/blocks when such data tries to leave the organization.',
+    distractors: {
+      0: 'An IPS blocks network attacks based on signatures and anomalies — it does not typically inspect for PII patterns.',
+      2: 'RADIUS is an authentication protocol.',
+      3: 'IPsec is for tunnel encryption.'
+    }
+  },
+  {
+    id: 'q026', domain: '4', topic: 'SPF',
+    text: 'A security administrator configures a DNS server with an SPF record. What does this accomplish?',
+    options: ['Encrypts outgoing email', 'Lists all servers authorized to send email for the domain', 'Digitally signs outgoing emails', 'Provides spam disposition instructions'],
+    answer: 1,
+    explanation: 'SPF (Sender Policy Framework) is a DNS TXT record listing which mail servers are authorized to send mail for the domain. Receivers check incoming mail against this list.',
+    distractors: {
+      0: 'Encryption in transit is handled by TLS, not SPF.',
+      2: 'Digital signing of email is DKIM\'s job.',
+      3: 'Disposition instructions (reject / quarantine / none) come from DMARC.'
+    }
+  },
+  {
+    id: 'q027', domain: '4', topic: 'AAA centralization',
+    text: 'A security administrator wants technicians to log in to wireless APs and switches against a central database rather than local accounts. Which is BEST?',
+    options: ['COPE', 'AAA', 'IPsec', 'SIEM'],
+    answer: 1,
+    explanation: 'AAA (Authentication, Authorization, Accounting) — implemented with RADIUS or TACACS+ — centralizes login for network devices against a single user database.',
+    distractors: {
+      0: 'COPE (Corporate-Owned, Personally Enabled) is a mobile device strategy, not an auth model.',
+      2: 'IPsec is encrypted tunneling.',
+      3: 'A SIEM aggregates logs and alerts; it does not authenticate users into devices.'
+    }
+  },
+  {
+    id: 'q028', domain: '4', topic: 'Least privilege',
+    text: 'An audit finds many IT staff have Administrator rights they don\'t need for daily work. The audit recommends limiting access to only what each person needs. Which principle is this?',
+    options: ['Password vaulting', 'Offboarding', 'Least privilege', 'Discretionary access control'],
+    answer: 2,
+    explanation: 'Least privilege grants users only the minimum access needed to do their job — limiting blast radius if an account is compromised.',
+    distractors: {
+      0: 'Password vaulting securely stores passwords; it doesn\'t reduce permissions.',
+      1: 'Offboarding is the process when someone leaves the organization.',
+      3: 'DAC is an access-control model where data owners decide who can access; it doesn\'t inherently restrict permissions.'
+    }
+  },
+  {
+    id: 'q029', domain: '4', topic: 'Incident response phases',
+    text: 'After a breach, a security administrator builds new servers and security systems to bring financial services back online. Which incident response phase BEST describes this?',
+    options: ['Lessons learned', 'Containment', 'Recovery', 'Analysis'],
+    answer: 2,
+    explanation: 'Recovery is the phase where you rebuild affected systems and restore normal operations after a breach.',
+    distractors: {
+      0: 'Lessons learned is the post-incident review.',
+      1: 'Containment limits the damage and stops the spread during the incident.',
+      3: 'Analysis is investigating what happened and how.'
+    }
+  },
+  {
+    id: 'q030', domain: '4', topic: 'Containment with sandbox',
+    text: 'A suspected malware sample is copied from a user\'s computer and run inside a sandbox. Which incident response phase is this?',
+    options: ['Eradication', 'Preparation', 'Recovery', 'Containment'],
+    answer: 3,
+    explanation: 'Running malware in a sandbox isolates it from the rest of the environment so it can be observed without spreading — that is containment.',
+    distractors: {
+      0: 'Eradication is removing malware from production systems.',
+      1: 'Preparation is the pre-incident readiness work.',
+      2: 'Recovery is bringing services back online after the incident.'
+    }
+  },
+  {
+    id: 'q031', domain: '4', topic: 'Antivirus log interpretation',
+    text: 'A laptop log shows three events: "ChangeLog-5.0.4.scr | Quarantine Success", "ViewerBase.dll | Quarantine Failure", and "Sample32.dat | Quarantine Success". Which BEST describes these?',
+    options: ['Antivirus identified three threats; two were quarantined', 'A host firewall blocked two flows', 'Host-based allow list blocked two apps', 'IPS identified two vulnerabilities'],
+    answer: 0,
+    explanation: 'Three antivirus events: three detected threats. Two went to quarantine successfully; one failed to quarantine. Note the file extensions — .scr, .dll, and .dat are all common malware carriers.',
+    distractors: {
+      1: 'These are file-level events, not network flow events.',
+      2: 'Allow lists block executions, not quarantine files.',
+      3: 'IPS is network-based; these entries reference specific files on disk.'
+    }
+  },
+  {
+    id: 'q032', domain: '4', topic: 'Tabletop exercise',
+    text: 'IT directors and senior management meet annually to discuss a simulated disaster and walk through how they would respond. Which BEST describes this exercise?',
+    options: ['Capacity planning', 'Business impact analysis', 'Continuity of operations', 'Tabletop exercise'],
+    answer: 3,
+    explanation: 'A tabletop exercise is a discussion-based simulation. Stakeholders verbally walk through their roles and decisions for a hypothetical scenario — no systems are actually touched.',
+    distractors: {
+      0: 'Capacity planning forecasts resource needs.',
+      1: 'BIA identifies critical functions and the impact of their loss.',
+      2: 'Continuity of operations is the broader plan; a tabletop tests it.'
+    }
+  },
+  {
+    id: 'q033', domain: '4', topic: 'NEXT step in IR',
+    text: 'An IPS report shows exploit attempts against externally facing web servers. The sysadmin finds unusual log entries on each server. What is the NEXT step in the incident response process?',
+    options: ['Check IPS logs for other attacks', 'Plan malware removal', 'Disable breached accounts', 'Disconnect the web servers from the network'],
+    answer: 3,
+    explanation: 'You\'ve detected compromise — the next step is containment. Disconnecting the servers prevents lateral spread and ongoing exfiltration while you investigate.',
+    distractors: {
+      0: 'Further log analysis comes during the analysis phase — but containment first.',
+      1: 'Malware removal is the eradication phase, after containment.',
+      2: 'No indication user accounts are the compromise vector; the servers themselves are.'
+    }
+  },
+  {
+    id: 'q034', domain: '4', topic: 'Secure baselines',
+    text: 'Before deploying production servers, an organization applies a standardized configuration file that disables unused services and sets password policy. Which BEST describes this configuration?',
+    options: ['Secure baseline', 'Change request', 'Risk register', 'Service catalog'],
+    answer: 0,
+    explanation: 'A secure baseline is a standardized, hardened configuration applied consistently to systems before they go live.',
+    distractors: {
+      1: 'A change request is documentation for a proposed change.',
+      2: 'A risk register tracks known risks and their mitigations.',
+      3: 'A service catalog lists available IT services to users.'
+    }
+  },
+  {
+    id: 'q035', domain: '4', topic: 'Vulnerability scan',
+    text: 'A new application server is in test and not yet in production. The security director wants to find any exploitable weakness. Which is BEST?',
+    options: ['Tabletop exercise', 'Penetration test', 'Audit', 'Risk acceptance'],
+    answer: 1,
+    explanation: 'A penetration test actively attempts to exploit weaknesses — the best way to determine what can actually be exploited (not just what flaws exist).',
+    distractors: {
+      0: 'A tabletop is discussion-only.',
+      2: 'An audit checks compliance against a standard.',
+      3: 'Risk acceptance is a decision, not an assessment activity.'
+    }
+  },
+
+  // ===== DOMAIN 5.0 — PROGRAM MANAGEMENT & OVERSIGHT =====
+  {
+    id: 'q036', domain: '5', topic: 'MOA',
+    text: 'Two companies that have been working together want to qualify their partnership with a broad formal agreement of goals and objectives. Which BEST describes this?',
+    options: ['SLA', 'SOW', 'MOA', 'NDA'],
+    answer: 2,
+    explanation: 'An MOA (Memorandum of Agreement) is a formal document stating broad goals and objectives both parties agree to pursue — used to qualify a partnership.',
+    distractors: {
+      0: 'An SLA specifies measurable service terms (uptime %, response time).',
+      1: 'An SOW is a detailed deliverables list for a specific project.',
+      3: 'An NDA covers confidentiality only.'
+    }
+  },
+  {
+    id: 'q037', domain: '5', topic: 'SLA',
+    text: 'A company signs an SLA with an Internet service provider. Which of the following would BEST be specified in the SLA?',
+    options: ['IPsec tunnel configuration', '99.99% uptime', 'HTTPS over tcp/443', 'Application use peaks on the 15th'],
+    answer: 1,
+    explanation: 'An SLA specifies measurable service commitments. 99.99% uptime is a textbook SLA metric.',
+    distractors: {
+      0: 'Specific protocol configuration is implementation detail, not SLA scope.',
+      2: 'Application protocols are the customer\'s use of the service, not a provider commitment.',
+      3: 'Customer usage patterns don\'t belong in an SLA.'
+    }
+  },
+  {
+    id: 'q038', domain: '5', topic: 'Risk transference cancellation',
+    text: 'An organization has insurance to cover ransomware losses, but premiums have grown too costly. They cancel the policy and decide to handle ransomware risk internally. Which BEST describes this action?',
+    options: ['Mitigation', 'Acceptance', 'Transference', 'Avoidance'],
+    answer: 1,
+    explanation: 'They are no longer transferring risk to an insurer, but they also aren\'t avoiding or mitigating it — they are accepting the risk of ransomware happening to them and handling it internally.',
+    distractors: {
+      0: 'Mitigation reduces likelihood or impact via controls (backups, EDR). Just "handle internally" without specifying controls is acceptance.',
+      2: 'Transference is what they just stopped doing.',
+      3: 'Avoidance means eliminating the activity that creates the risk.'
+    }
+  },
+  {
+    id: 'q039', domain: '5', topic: 'Risk appetite',
+    text: 'Which term describes how cautious or aggressive an organization is about accepting specific risks?',
+    options: ['Risk appetite', 'Risk register', 'Risk transfer', 'Risk reporting'],
+    answer: 0,
+    explanation: 'Risk appetite is the level of risk an organization is willing to take to achieve its objectives — conservative, balanced, or aggressive.',
+    distractors: {
+      1: 'A risk register lists known risks with details.',
+      2: 'Risk transfer shifts risk to another party (insurance).',
+      3: 'Risk reporting communicates risk status to stakeholders.'
+    }
+  },
+  {
+    id: 'q040', domain: '5', topic: 'Due care',
+    text: 'Before deploying a new app, a company performs an internal audit to confirm all servers are configured with appropriate security features. Which BEST describes this process?',
+    options: ['Due care', 'Active reconnaissance', 'Data retention', 'Statement of work'],
+    answer: 0,
+    explanation: 'Due care is taking reasonable steps to protect organizational assets — verifying configurations before launch is a textbook due care activity.',
+    distractors: {
+      1: 'Active recon is gathering info about a target by directly interacting with it.',
+      2: 'Data retention is policy around how long to keep data.',
+      3: 'An SOW is a project deliverables document.'
+    }
+  },
+  {
+    id: 'q041', domain: '5', topic: 'Backout plan',
+    text: 'A technician applies a patch to the first of 50 web servers during a scheduled maintenance window. The web service fails with a critical error after patching. What should the technician do NEXT?',
+    options: ['Notify stakeholders of the outage', 'Follow the backout plan', 'Test the upgrade in a lab', 'Re-evaluate the impact analysis'],
+    answer: 1,
+    explanation: 'Change management requires every change to have a backout plan. When a patch breaks production, you execute that plan to revert and restore service immediately.',
+    distractors: {
+      0: 'You may need to notify, but restoring service is the immediate priority.',
+      2: 'Lab testing should have happened before the change window.',
+      3: 'Impact analysis was done in planning; now you act on what\'s broken.'
+    }
+  },
+  {
+    id: 'q042', domain: '5', topic: 'Shadow IT',
+    text: 'Which threat actor is MOST likely to install a company\'s internal application on a public cloud provider without authorization?',
+    options: ['Organized crime', 'Nation state', 'Shadow IT', 'Hacktivist'],
+    answer: 2,
+    explanation: 'Shadow IT is unauthorized internal use — employees or teams using cloud services or apps without going through formal IT channels. Often well-intentioned but creates significant data and compliance risk.',
+    distractors: {
+      0: 'Organized crime attacks externally for profit.',
+      1: 'Nation states pursue espionage and disruption.',
+      3: 'Hacktivists are externally motivated by political causes.'
+    }
+  },
+  {
+    id: 'q043', domain: '5', topic: 'End-of-life',
+    text: 'An organization has a critical vulnerability in an Internet-facing firewall. The vendor confirms the firewall is no longer for sale and no patch will be issued. Which BEST describes this?',
+    options: ['End-of-life', 'Improper input handling', 'Improper key management', 'Incompatible OS'],
+    answer: 0,
+    explanation: 'End-of-life (EOL) means the product is no longer supported — no patches, no updates. EOL systems on the Internet are a serious risk and need replacement.',
+    distractors: {
+      1: 'Improper input handling is a coding flaw class (SQLi, XSS).',
+      2: 'Improper key management is a crypto operational issue.',
+      3: 'Incompatible OS is a deployment problem, not the vendor\'s policy.'
+    }
+  },
+  {
+    id: 'q044', domain: '5', topic: 'Automation alerting',
+    text: 'A system administrator gets a text alert whenever access rights change on a database with private customer information. Which BEST describes this alert?',
+    options: ['Maintenance window', 'Attestation and acknowledgment', 'Automation', 'External audit'],
+    answer: 2,
+    explanation: 'Automated alerting on a defined event (access right changes) is a security automation use case — the system watches and notifies humans only when human attention is needed.',
+    distractors: {
+      0: 'A maintenance window is a planned downtime period.',
+      1: 'Attestation is users formally confirming something (e.g., compliance training).',
+      3: 'An external audit is a third-party formal review, not a real-time alert.'
+    }
+  },
+  {
+    id: 'q045', domain: '5', topic: 'Compliance reporting',
+    text: 'A healthcare provider implements logging, encryption, and access reviews specifically to satisfy HIPAA. Which BEST describes the justification for these controls?',
+    options: ['Chain of custody', 'Password vaulting', 'Compliance reporting', 'Sandboxing'],
+    answer: 2,
+    explanation: 'Controls implemented specifically to meet a regulatory requirement (HIPAA, PCI DSS, SOX, GDPR) are justified by compliance — and the resulting evidence is compliance reporting.',
+    distractors: {
+      0: 'Chain of custody is forensic evidence handling.',
+      1: 'Password vaulting is one specific control, not a justification.',
+      3: 'Sandboxing isolates code for analysis.'
+    }
+  },
+
+  // ===== ADDITIONAL HIGH-YIELD QUESTIONS =====
+  {
+    id: 'q046', domain: '2', topic: 'Privilege escalation',
+    text: 'An attacker who initially gained access as a standard user finds a way to obtain root/administrator privileges on the same system. Which BEST describes this?',
+    options: ['Lateral movement', 'Privilege escalation', 'Persistence', 'Reconnaissance'],
+    answer: 1,
+    explanation: 'Privilege escalation is moving from a lower-privileged account to a higher-privileged one on the same system — for instance, from user to root via a kernel exploit or misconfigured sudo.',
+    distractors: {
+      0: 'Lateral movement is moving across systems at the same privilege level.',
+      2: 'Persistence is establishing ways to maintain access after reboots.',
+      3: 'Reconnaissance is information gathering.'
+    }
+  },
+  {
+    id: 'q047', domain: '4', topic: 'EDR',
+    text: 'Which technology continuously monitors endpoint behavior, detects suspicious activity in real time, and provides response actions like isolation and rollback?',
+    options: ['Antivirus', 'EDR', 'SIEM', 'Firewall'],
+    answer: 1,
+    explanation: 'EDR (Endpoint Detection and Response) goes beyond signature-based antivirus to monitor behaviors, correlate events, alert, and enable response actions like isolating an infected host.',
+    distractors: {
+      0: 'Traditional AV is mainly signature-based detection without the full response feature set.',
+      2: 'SIEM aggregates and correlates logs from many sources — it isn\'t per-endpoint behavior monitoring.',
+      3: 'Firewalls control network traffic.'
+    }
+  },
+  {
+    id: 'q048', domain: '3', topic: 'IaaS responsibility',
+    text: 'In an IaaS deployment, who is typically responsible for patching the operating system on a virtual machine?',
+    options: ['The cloud provider', 'The customer', 'Shared equally', 'The hardware vendor'],
+    answer: 1,
+    explanation: 'In IaaS, the provider manages the physical hardware, hypervisor, and networking. Everything from the OS upward — including patching the guest OS — is the customer\'s responsibility.',
+    distractors: {
+      0: 'The provider patches the hypervisor and physical layer, not the customer\'s guest OS.',
+      2: 'Not in IaaS — the line is drawn clearly at the OS.',
+      3: 'Hardware vendors don\'t patch customer OSes.'
+    }
+  },
+  {
+    id: 'q049', domain: '1', topic: 'Encryption types',
+    text: 'Which type of encryption uses the same key for encrypting and decrypting data?',
+    options: ['Asymmetric', 'Symmetric', 'Hashing', 'Steganography'],
+    answer: 1,
+    explanation: 'Symmetric encryption (AES, ChaCha20) uses one shared key for both operations. It is fast and ideal for bulk data, but key distribution is the challenge.',
+    distractors: {
+      0: 'Asymmetric (RSA, ECC) uses a public/private key pair — different keys for encrypt and decrypt.',
+      2: 'Hashing is a one-way function with no key and no decryption.',
+      3: 'Steganography hides data inside other data (e.g., in an image), not key-based encryption.'
+    }
+  },
+  {
+    id: 'q050', domain: '2', topic: 'SQL injection',
+    text: 'A web app login form passes the user\'s entered username directly into a database query without validation. An attacker submits a username of `admin\' OR \'1\'=\'1` to bypass login. Which attack is this?',
+    options: ['Cross-site scripting', 'SQL injection', 'Buffer overflow', 'CSRF'],
+    answer: 1,
+    explanation: 'SQL injection occurs when user input is concatenated into a SQL query unsafely. The `OR \'1\'=\'1\'` makes the WHERE clause always true, bypassing authentication.',
+    distractors: {
+      0: 'XSS injects JavaScript into pages viewed by other users.',
+      2: 'Buffer overflow writes past memory boundaries — typically in compiled code.',
+      3: 'CSRF tricks an authenticated user into executing actions on the attacker\'s behalf.'
+    }
+  },
+  {
+    id: 'q051', domain: '4', topic: 'Forensics order of volatility',
+    text: 'During digital forensics, which of the following should be collected FIRST due to its volatility?',
+    options: ['Disk image', 'Backup tapes', 'RAM contents', 'Archived logs'],
+    answer: 2,
+    explanation: 'Order of volatility: CPU registers/cache → RAM → routing tables/ARP cache → temp files → disk → remote logs → archived/backup media. RAM is the most volatile of the choices here — it disappears on power loss.',
+    distractors: {
+      0: 'Disk persists across power cycles; collect after volatile data.',
+      1: 'Backups are the least volatile — they\'re already saved off-system.',
+      3: 'Archived logs are stored long-term and stable.'
+    }
+  },
+  {
+    id: 'q052', domain: '5', topic: 'BIA',
+    text: 'A new CISO wants to identify which business processes would cause the greatest impact if disrupted, and the maximum downtime each can tolerate. Which assessment is this?',
+    options: ['Penetration test', 'Vulnerability scan', 'Business Impact Analysis', 'Gap analysis'],
+    answer: 2,
+    explanation: 'A BIA (Business Impact Analysis) identifies critical business functions, the impact of their loss, and defines metrics like RTO, RPO, and MTD for each.',
+    distractors: {
+      0: 'A pentest looks for exploitable technical weaknesses.',
+      1: 'A vulnerability scan inventories known flaws.',
+      3: 'Gap analysis compares current vs. desired security state.'
+    }
+  },
+  {
+    id: 'q053', domain: '3', topic: 'Load balancer',
+    text: 'Which appliance distributes incoming requests across multiple servers to improve performance and provide redundancy?',
+    options: ['Proxy', 'Load balancer', 'WAF', 'IPS'],
+    answer: 1,
+    explanation: 'A load balancer distributes client requests across a server pool. It improves throughput and provides redundancy: if one backend dies, traffic continues to the others.',
+    distractors: {
+      0: 'A proxy intermediates and can cache, but isn\'t primarily for distribution.',
+      2: 'A WAF (Web Application Firewall) inspects HTTP traffic for attacks.',
+      3: 'An IPS detects and blocks network attacks.'
+    }
+  },
+  {
+    id: 'q054', domain: '4', topic: 'SIEM',
+    text: 'A security operations center wants to correlate authentication failures across firewalls, AD domain controllers, and VPN concentrators in a single dashboard. Which tool is BEST?',
+    options: ['Vulnerability scanner', 'SIEM', 'Honeypot', 'Sandbox'],
+    answer: 1,
+    explanation: 'A SIEM (Security Information and Event Management) ingests logs from many sources, correlates events across them, and presents alerts/dashboards. Cross-source correlation is its core value.',
+    distractors: {
+      0: 'A vuln scanner finds flaws; it doesn\'t aggregate logs.',
+      2: 'A honeypot lures attackers — it\'s a data source, not a correlation engine.',
+      3: 'A sandbox runs suspicious code in isolation for analysis.'
+    }
+  },
+  {
+    id: 'q055', domain: '1', topic: 'Symmetric vs asymmetric speed',
+    text: 'Why does TLS use asymmetric encryption to exchange a session key, then symmetric encryption for the actual data?',
+    options: ['Asymmetric is more secure for bulk data', 'Symmetric is much faster, asymmetric solves key exchange', 'Symmetric supports digital signatures', 'Asymmetric doesn\'t require a key'],
+    answer: 1,
+    explanation: 'Asymmetric crypto is computationally expensive but solves the key distribution problem (you can publish a public key safely). Symmetric crypto is much faster but needs a pre-shared key. TLS uses asymmetric to safely exchange a symmetric session key, then symmetric for the bulk data — best of both.',
+    distractors: {
+      0: 'Asymmetric isn\'t "more secure" — it\'s slower and used differently.',
+      2: 'Symmetric does not support digital signatures (no private/public key pair).',
+      3: 'Asymmetric still uses keys — a public/private pair.'
+    }
+  }
+];
+
+/* ============================================================
+   FLASHCARD DATA — acronyms and concept cards
+   ============================================================ */
+
+const FLASHCARDS = [
+  // Cryptography
+  { cat: 'crypto', front: 'AES', back: 'Advanced Encryption Standard — symmetric block cipher, 128/192/256-bit keys. Modern standard.' },
+  { cat: 'crypto', front: 'RSA', back: 'Rivest-Shamir-Adleman — asymmetric algorithm using factoring of large primes. For key exchange and digital signatures.' },
+  { cat: 'crypto', front: 'ECC', back: 'Elliptic Curve Cryptography — asymmetric crypto using elliptic curves. Smaller keys, same security as RSA. Great for mobile/IoT.' },
+  { cat: 'crypto', front: 'PKI', back: 'Public Key Infrastructure — framework of CAs, certificates, and policies that bind public keys to identities.' },
+  { cat: 'crypto', front: 'CA', back: 'Certificate Authority — trusted entity that issues and signs digital certificates.' },
+  { cat: 'crypto', front: 'CRL', back: 'Certificate Revocation List — list of certificates revoked before their expiration date.' },
+  { cat: 'crypto', front: 'OCSP', back: 'Online Certificate Status Protocol — real-time check of whether a single cert is revoked. Faster than downloading the full CRL.' },
+  { cat: 'crypto', front: 'CSR', back: 'Certificate Signing Request — request submitted to a CA containing the public key and identity info for a new cert.' },
+  { cat: 'crypto', front: 'HSM', back: 'Hardware Security Module — dedicated hardware for secure key storage and crypto operations. Tamper-resistant.' },
+  { cat: 'crypto', front: 'TPM', back: 'Trusted Platform Module — chip on a motherboard that stores keys, performs crypto, and supports secure boot and disk encryption (BitLocker).' },
+  { cat: 'crypto', front: 'PBKDF2', back: 'Password-Based Key Derivation Function 2 — slows down brute-force attacks on passwords by repeatedly hashing with a salt.' },
+  { cat: 'crypto', front: 'HMAC', back: 'Hash-based Message Authentication Code — combines a hash with a shared secret key to verify both integrity AND authenticity.' },
+  { cat: 'crypto', front: 'SHA-256', back: 'Secure Hash Algorithm, 256-bit. SHA-1 is broken; SHA-2 family (including SHA-256) is current standard.' },
+  { cat: 'crypto', front: 'MD5', back: 'Message Digest 5 — 128-bit hash, BROKEN due to collisions. Do not use for security.' },
+  { cat: 'crypto', front: 'PFS', back: 'Perfect Forward Secrecy — even if the long-term key is later stolen, past sessions stay safe. Requires ephemeral key exchange (DHE, ECDHE).' },
+  { cat: 'crypto', front: 'GCM', back: 'Galois/Counter Mode — block cipher mode providing both confidentiality AND authentication (AEAD). Common with AES.' },
+
+  // IAM
+  { cat: 'iam', front: 'AAA', back: 'Authentication, Authorization, Accounting — the framework for managing who, what they can do, and what they did.' },
+  { cat: 'iam', front: 'MFA', back: 'Multi-Factor Authentication — two or more authentication factors from different categories (know/have/are/somewhere/something you do).' },
+  { cat: 'iam', front: 'SSO', back: 'Single Sign-On — authenticate once, access many systems. Improves UX but increases impact if credentials are stolen.' },
+  { cat: 'iam', front: 'SAML', back: 'Security Assertion Markup Language — XML-based federation protocol used by enterprises for web SSO.' },
+  { cat: 'iam', front: 'OAuth', back: 'Open Authorization — delegated authorization framework. "Sign in with Google" uses OAuth.' },
+  { cat: 'iam', front: 'OIDC', back: 'OpenID Connect — authentication layer built on top of OAuth 2.0. Provides identity in addition to authorization.' },
+  { cat: 'iam', front: 'RADIUS', back: 'Remote Authentication Dial-In User Service — UDP-based AAA protocol. Often used for Wi-Fi 802.1X.' },
+  { cat: 'iam', front: 'TACACS+', back: 'Terminal Access Controller Access-Control System Plus — Cisco AAA protocol. TCP-based, encrypts the full payload (unlike RADIUS).' },
+  { cat: 'iam', front: 'LDAP', back: 'Lightweight Directory Access Protocol — protocol for querying directory services like Active Directory. Use LDAPS for encrypted version.' },
+  { cat: 'iam', front: 'Kerberos', back: 'Ticket-based authentication protocol used by Active Directory. Uses a KDC and time-sensitive tickets to avoid replays.' },
+  { cat: 'iam', front: 'MAC', back: 'Mandatory Access Control — system enforces access based on labels/classifications. Subjects cannot override. Used in military/high-security.' },
+  { cat: 'iam', front: 'DAC', back: 'Discretionary Access Control — the owner of a resource decides who can access. Most familiar file-system model.' },
+  { cat: 'iam', front: 'RBAC', back: 'Role-Based Access Control — access granted based on job role. Easier to manage at scale.' },
+  { cat: 'iam', front: 'ABAC', back: 'Attribute-Based Access Control — access decisions based on multiple attributes (user, resource, environment). Most flexible.' },
+  { cat: 'iam', front: 'TOTP', back: 'Time-based One-Time Password — code regenerates every 30s (Google Authenticator, Authy).' },
+  { cat: 'iam', front: 'HOTP', back: 'HMAC-based One-Time Password — code changes per event/click, not per time interval.' },
+  { cat: 'iam', front: 'PAM', back: 'Privileged Access Management — controls and audits use of admin/root accounts. Also: Pluggable Authentication Modules (Linux) — context matters!' },
+  { cat: 'iam', front: 'FIDO2', back: 'Fast IDentity Online 2 — passwordless authentication using public-key crypto and a hardware token (YubiKey) or platform authenticator.' },
+
+  // Networking & protocols
+  { cat: 'network', front: 'TLS', back: 'Transport Layer Security — successor to SSL. Encrypts data in transit. TLS 1.2 and 1.3 are current; 1.0/1.1 deprecated.' },
+  { cat: 'network', front: 'IPsec', back: 'IP Security — suite of protocols for encrypting/authenticating IP traffic. Used by site-to-site and many remote-access VPNs.' },
+  { cat: 'network', front: 'VPN', back: 'Virtual Private Network — encrypted tunnel over an untrusted network. Site-to-site or remote-access.' },
+  { cat: 'network', front: 'SSH', back: 'Secure Shell — encrypted remote-access protocol (port 22). Replaces telnet.' },
+  { cat: 'network', front: 'HTTPS', back: 'HTTP over TLS (port 443) — encrypted web traffic.' },
+  { cat: 'network', front: 'SFTP', back: 'SSH File Transfer Protocol — file transfer over SSH (port 22). Not the same as FTPS.' },
+  { cat: 'network', front: 'FTPS', back: 'FTP over TLS — uses port 21 (with TLS). Different from SFTP. Beware confusion.' },
+  { cat: 'network', front: 'DNSSEC', back: 'DNS Security Extensions — cryptographically signs DNS records to prevent spoofing.' },
+  { cat: 'network', front: 'DMZ / Screened Subnet', back: 'A network segment between trusted internal and untrusted external networks. Hosts public-facing services.' },
+  { cat: 'network', front: '802.1X', back: 'Port-based network access control. Authenticates devices before allowing them on the LAN. Often pairs with RADIUS.' },
+  { cat: 'network', front: 'NAC', back: 'Network Access Control — checks device posture (patches, AV, config) before granting network access.' },
+  { cat: 'network', front: 'WAF', back: 'Web Application Firewall — inspects HTTP/S traffic for application-layer attacks (SQLi, XSS).' },
+  { cat: 'network', front: 'IPS', back: 'Intrusion Prevention System — inline; detects and blocks attacks. (IDS is passive — alert only.)' },
+  { cat: 'network', front: 'SDN', back: 'Software-Defined Networking — separates control plane (decisions) from data plane (forwarding) in network devices.' },
+  { cat: 'network', front: 'SASE', back: 'Secure Access Service Edge — cloud-delivered convergence of networking (SD-WAN) and security (CASB, ZTNA, FWaaS).' },
+  { cat: 'network', front: 'CASB', back: 'Cloud Access Security Broker — security policy enforcement point between users and cloud services.' },
+  { cat: 'network', front: 'SPF', back: 'Sender Policy Framework — DNS record listing authorized mail servers for a domain.' },
+  { cat: 'network', front: 'DKIM', back: 'DomainKeys Identified Mail — cryptographic signature on outgoing mail to verify it wasn\'t altered and came from the claimed domain.' },
+  { cat: 'network', front: 'DMARC', back: 'Domain-based Message Authentication, Reporting and Conformance — tells receivers what to do if SPF or DKIM fail (none/quarantine/reject).' },
+
+  // Threats & attacks
+  { cat: 'threats', front: 'DDoS', back: 'Distributed Denial of Service — many sources flood a target with traffic. Mitigation: cloud scrubbing services, rate limiting, anycast.' },
+  { cat: 'threats', front: 'APT', back: 'Advanced Persistent Threat — sophisticated, often nation-state, attacker that maintains long-term access for espionage.' },
+  { cat: 'threats', front: 'RAT', back: 'Remote Access Trojan — malware that gives attacker remote control of the infected host.' },
+  { cat: 'threats', front: 'IoC', back: 'Indicator of Compromise — evidence that a system has been breached (suspicious file hash, unusual login, beaconing to C2).' },
+  { cat: 'threats', front: 'XSS', back: 'Cross-Site Scripting — attacker injects JavaScript that executes in victims\' browsers. Stored/reflected/DOM-based.' },
+  { cat: 'threats', front: 'CSRF', back: 'Cross-Site Request Forgery — tricks an authenticated user\'s browser into making unwanted requests to a trusted site.' },
+  { cat: 'threats', front: 'SQLi', back: 'SQL Injection — unsanitized input is concatenated into a SQL query, letting attacker read/modify the database.' },
+  { cat: 'threats', front: 'Smishing', back: 'SMS phishing — phishing via text message.' },
+  { cat: 'threats', front: 'Vishing', back: 'Voice phishing — phishing over the phone, often with caller ID spoofing.' },
+  { cat: 'threats', front: 'Watering Hole', back: 'Attacker compromises a third-party site frequented by the target group, infecting visitors.' },
+  { cat: 'threats', front: 'Typosquatting', back: 'Registering misspelled domains (goggle.com) to catch typos and redirect to malicious sites.' },
+  { cat: 'threats', front: 'Pretexting', back: 'Social engineering using a fabricated scenario ("I\'m from IT, need your password") to extract info.' },
+  { cat: 'threats', front: 'Zero-day', back: 'Vulnerability unknown to the vendor/defenders — no patch exists yet. Highest-risk because no defense in place.' },
+  { cat: 'threats', front: 'Race condition', back: 'Vulnerability from improper timing between operations. TOCTOU = Time-of-check to Time-of-use.' },
+  { cat: 'threats', front: 'Shadow IT', back: 'Unauthorized internal use of tech/cloud services without going through formal IT — creates compliance and security risk.' },
+
+  // GRC
+  { cat: 'grc', front: 'BIA', back: 'Business Impact Analysis — identifies critical functions and impact of their loss. Produces RTO, RPO, MTD.' },
+  { cat: 'grc', front: 'RTO', back: 'Recovery Time Objective — maximum acceptable downtime before service must be restored. "How long can we be down?"' },
+  { cat: 'grc', front: 'RPO', back: 'Recovery Point Objective — maximum acceptable data loss measured in time. "How much data can we afford to lose?"' },
+  { cat: 'grc', front: 'MTBF', back: 'Mean Time Between Failures — average time between failures of a repairable system.' },
+  { cat: 'grc', front: 'MTTR', back: 'Mean Time To Repair — average time to fix a failure and restore service.' },
+  { cat: 'grc', front: 'ALE', back: 'Annualized Loss Expectancy = SLE × ARO. The expected loss per year from a specific risk.' },
+  { cat: 'grc', front: 'SLE', back: 'Single Loss Expectancy = Asset Value × Exposure Factor. Loss from ONE occurrence.' },
+  { cat: 'grc', front: 'ARO', back: 'Annualized Rate of Occurrence — how many times per year you expect the loss event.' },
+  { cat: 'grc', front: 'MOU', back: 'Memorandum of Understanding — informal agreement / letter of intent. Often non-binding.' },
+  { cat: 'grc', front: 'MOA', back: 'Memorandum of Agreement — formal agreement with broad goals and objectives. Step up from MOU.' },
+  { cat: 'grc', front: 'SLA', back: 'Service Level Agreement — measurable service commitments (uptime %, response times) with consequences for missing them.' },
+  { cat: 'grc', front: 'SOW', back: 'Statement of Work — specific deliverables, timeline, milestones for a project. Lives under an MSA.' },
+  { cat: 'grc', front: 'MSA', back: 'Master Service Agreement — umbrella legal contract between parties. SOWs operate under it.' },
+  { cat: 'grc', front: 'NDA', back: 'Non-Disclosure Agreement — confidentiality contract.' },
+  { cat: 'grc', front: 'BPA', back: 'Business Partnership Agreement — when two entities go into business together. Covers roles, share, exits.' },
+  { cat: 'grc', front: 'GDPR', back: 'EU privacy regulation. Strict rules on personal data collection, processing, and breach notification (72 hours).' },
+  { cat: 'grc', front: 'HIPAA', back: 'US law protecting health information (PHI). Applies to healthcare providers, insurers, and their business associates.' },
+  { cat: 'grc', front: 'PCI DSS', back: 'Payment Card Industry Data Security Standard — required for any org that handles credit cards.' },
+  { cat: 'grc', front: 'PII', back: 'Personally Identifiable Information — data that can identify an individual (name, SSN, address).' },
+  { cat: 'grc', front: 'PHI', back: 'Protected Health Information — health data tied to an individual. Regulated under HIPAA.' },
+
+  // Concept cards (full sentences, not acronyms)
+  { cat: 'concepts', front: 'CIA Triad', back: 'Confidentiality (encryption, access control) + Integrity (hashing, signatures) + Availability (redundancy, DR). The foundation of infosec.' },
+  { cat: 'concepts', front: 'Defense in depth', back: 'Layered security: multiple overlapping controls so failure of one doesn\'t mean compromise. Network + host + app + data + user.' },
+  { cat: 'concepts', front: 'Least privilege', back: 'Grant only the minimum access needed for a role. Limits blast radius if an account is compromised.' },
+  { cat: 'concepts', front: 'Separation of duties', back: 'No single person controls a critical end-to-end process. Reduces fraud risk. Example: developer ≠ approver ≠ deployer.' },
+  { cat: 'concepts', front: 'Zero trust', back: 'Never trust, always verify. No implicit trust based on network location. Authenticate and authorize every access.' },
+  { cat: 'concepts', front: 'Risk treatment options', back: 'Avoid (don\'t do the activity), Mitigate (reduce likelihood/impact), Transfer (insurance, outsource), Accept (live with it).' },
+  { cat: 'concepts', front: 'Order of volatility (forensics)', back: 'CPU/registers → RAM → routing tables/ARP → temp files → disk → remote logs → backups. Collect most volatile first.' },
+  { cat: 'concepts', front: 'IR phases', back: 'Preparation → Identification → Containment → Eradication → Recovery → Lessons Learned. (PICERL)' },
+  { cat: 'concepts', front: 'Symmetric vs asymmetric', back: 'Symmetric: one shared key, fast, bulk data (AES). Asymmetric: public/private key pair, slow, key exchange and signatures (RSA, ECC).' },
+  { cat: 'concepts', front: 'SPF / DKIM / DMARC', back: 'SPF = who can send. DKIM = was the message tampered with. DMARC = what to do when SPF/DKIM fail.' },
+  { cat: 'concepts', front: 'IDS vs IPS', back: 'IDS: passive, alerts only. IPS: inline, blocks. IPS sits in the traffic path; IDS sees a copy via SPAN/TAP.' },
+  { cat: 'concepts', front: 'Hashing vs encryption', back: 'Hashing = one-way, fixed-length output, no key, no reversing (verify integrity). Encryption = reversible with a key.' },
+  { cat: 'concepts', front: 'Backup types', back: 'Full (everything). Incremental (since last backup of any type, smallest, slow restore). Differential (since last full, growing, faster restore).' },
+  { cat: 'concepts', front: 'Patch management cycle', back: 'Identify → Test → Approve → Schedule → Deploy → Verify. Always have a backout plan.' },
+  { cat: 'concepts', front: 'Cloud responsibility (IaaS)', back: 'Provider: hardware, hypervisor, network. Customer: OS, runtime, app, data, access. Patch your VMs.' },
+  { cat: 'concepts', front: 'Cloud responsibility (SaaS)', back: 'Provider: everything technical. Customer: their users, their data, their access configuration.' }
+];
+
+/* ============================================================
+   CONCEPT DEEP-DIVES
+   ============================================================ */
+
+const CONCEPTS = [
+  {
+    id: 'cia', domain: '1', name: 'The CIA Triad',
+    content: `
+      <h2>The CIA Triad</h2>
+      <div class="domain-pill">DOMAIN 1.2</div>
+      <p>The three foundational principles of information security. Every control you'll study supports at least one of these.</p>
+
+      <div class="concept-section">
+        <h3>Confidentiality</h3>
+        <p>Prevent unauthorized disclosure of information.</p>
+        <ul>
+          <li><b>Encryption</b> — only the intended recipient can decode the message</li>
+          <li><b>Access controls</b> — selectively restrict who can reach a resource</li>
+          <li><b>Two-factor authentication</b> — additional verification before disclosure</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Integrity</h3>
+        <p>Data is stored and transferred as intended; any modification is detectable.</p>
+        <ul>
+          <li><b>Hashing</b> — fixed-length output verifies content hasn't changed</li>
+          <li><b>Digital signatures</b> — cryptographically prove origin and integrity</li>
+          <li><b>Certificates</b> — bind a public key to an identity via a trusted CA</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Availability</h3>
+        <p>Systems and information are accessible when authorized users need them.</p>
+        <ul>
+          <li><b>Redundancy</b> — duplicate components so failure doesn't take service down</li>
+          <li><b>Fault tolerance</b> — keep running despite failures</li>
+          <li><b>Patching</b> — preventable downtime from known bugs/vulns</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Exam trap</h3>
+        <p>The CIA Triad is sometimes called the <b>AIC Triad</b>. Same thing — don't get confused.</p>
+        <p>Watch for non-repudiation in answer choices when the question is really about integrity. Non-repudiation is a separate concept (you can't deny you did it) that comes from digital signatures, but the CIA principle being supported is integrity.</p>
+      </div>
+    `
+  },
+  {
+    id: 'controls', domain: '1', name: 'Security Control Types',
+    content: `
+      <h2>Security Control Categories</h2>
+      <div class="domain-pill">DOMAIN 1.1</div>
+      <p>Controls are classified two ways: by <b>type</b> (technical/managerial/operational/physical) and by <b>function</b> (preventive/detective/corrective/deterrent/compensating/directive).</p>
+
+      <div class="concept-section">
+        <h3>By Type</h3>
+        <ul>
+          <li><b>Technical</b> — implemented in systems (firewall, encryption, IPS)</li>
+          <li><b>Managerial</b> — administrative (policies, risk assessments)</li>
+          <li><b>Operational</b> — done by people (awareness training, guard duty)</li>
+          <li><b>Physical</b> — touchable barriers (locks, fences, cameras, bollards)</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>By Function</h3>
+        <ul>
+          <li><b>Preventive</b> — stop an event before it happens (firewall, door lock, security guard at entry)</li>
+          <li><b>Deterrent</b> — discourage attempts (warning sign, visible cameras, threat of legal action)</li>
+          <li><b>Detective</b> — identify when an event happens (IDS, motion sensor, security audit)</li>
+          <li><b>Corrective</b> — restore after an event (backup restore, generator, incident response)</li>
+          <li><b>Compensating</b> — substitute when the primary control isn't possible (firewall rule instead of patching legacy app)</li>
+          <li><b>Directive</b> — point people toward compliance (policy, posted sign, training)</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Exam trick</h3>
+        <p>Same control can appear in different categories depending on use. A security guard is operational by type, but functionally they can be preventive (stopping entry), deterrent (visible presence), or detective (noticing intruders). The exam may give you the scenario and ask which function fits — read carefully.</p>
+      </div>
+    `
+  },
+  {
+    id: 'phishing', domain: '2', name: 'Phishing & Social Engineering',
+    content: `
+      <h2>Phishing & Social Engineering Variants</h2>
+      <div class="domain-pill">DOMAIN 2.2</div>
+      <p>Social engineering targets humans, not technology. Know the variants by their delivery method and target.</p>
+
+      <div class="concept-section">
+        <h3>By Channel</h3>
+        <ul>
+          <li><b>Phishing</b> — generic mass email asking for credentials or to click a link</li>
+          <li><b>Spear phishing</b> — targeted at a specific person or small group, using personal details</li>
+          <li><b>Whaling</b> — spear phishing aimed at high-value targets (CEO, CFO)</li>
+          <li><b>Vishing</b> — voice phishing, over phone calls or voicemail</li>
+          <li><b>Smishing</b> — SMS phishing, via text message</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Other Social Engineering</h3>
+        <ul>
+          <li><b>Pretexting</b> — fabricated story used to extract information ("I'm from your bank's fraud team...")</li>
+          <li><b>Impersonation</b> — pretending to be someone trusted (IT, executive, vendor)</li>
+          <li><b>Business email compromise (BEC)</b> — spoofed/compromised executive email asks for wire transfers</li>
+          <li><b>Watering hole</b> — compromise a site the target group visits, infect visitors</li>
+          <li><b>Typosquatting</b> — register misspelled domains to catch typo traffic</li>
+          <li><b>Misinformation/disinformation</b> — coordinated false content to influence opinion</li>
+          <li><b>Brand impersonation</b> — fake sites/ads using a real brand's identity</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Why people fall for it</h3>
+        <p>Attackers exploit psychological principles:</p>
+        <ul>
+          <li><b>Authority</b> — "this is the CEO"</li>
+          <li><b>Urgency</b> — "your account expires in 24 hours"</li>
+          <li><b>Scarcity</b> — "only 3 spots left"</li>
+          <li><b>Social proof</b> — "everyone else in your department already did this"</li>
+          <li><b>Familiarity / liking</b> — pretend to be a friend or colleague</li>
+          <li><b>Fear / intimidation</b> — "we're calling from the IRS..."</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Exam pattern</h3>
+        <p>The question describes a scenario; pick the variant by <b>delivery method</b>. Text message → smishing. Phone call → vishing. Compromised third-party site the victim visits → watering hole. Misspelled URL → typosquatting.</p>
+      </div>
+    `
+  },
+  {
+    id: 'rto-rpo', domain: '5', name: 'RPO vs RTO vs MTBF vs MTTR',
+    content: `
+      <h2>The Recovery Metrics Family</h2>
+      <div class="domain-pill">DOMAIN 5.2 / 3.4</div>
+      <p>These four metrics are CompTIA's favorite recovery-planning trap. You need to be able to distinguish them instantly.</p>
+
+      <div class="concept-section">
+        <h3>RPO — Recovery Point Objective</h3>
+        <p>Maximum acceptable <b>data loss</b>, measured in time before the incident.</p>
+        <ul>
+          <li>"We can lose at most 15 minutes of transactions" → RPO = 15 minutes</li>
+          <li>Drives backup frequency: tighter RPO = more frequent backups/replication</li>
+          <li>Mnemonic: <b>P</b>oint = <b>P</b>oint in time you can recover to</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>RTO — Recovery Time Objective</h3>
+        <p>Maximum acceptable <b>downtime</b> before service is restored.</p>
+        <ul>
+          <li>"Email must be back within 4 hours of an outage" → RTO = 4 hours</li>
+          <li>Drives investment in HA/DR architecture</li>
+          <li>Mnemonic: <b>T</b>ime = <b>T</b>ime to be back up</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>MTBF — Mean Time Between Failures</h3>
+        <p>Average time between failures of a <b>repairable</b> system. A reliability estimate from the manufacturer.</p>
+        <ul>
+          <li>"This drive averages 1.2 million hours before failure" → MTBF</li>
+          <li>Higher MTBF = more reliable</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>MTTR — Mean Time To Repair</h3>
+        <p>Average time to <b>fix</b> a failure and restore service.</p>
+        <ul>
+          <li>"Our average ticket-to-restore time is 90 minutes" → MTTR = 90 min</li>
+          <li>Lower MTTR = faster recovery</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Exam pattern</h3>
+        <p>The question describes a metric in words; pick the acronym:</p>
+        <ul>
+          <li>"acceptable data loss" → <b>RPO</b></li>
+          <li>"acceptable downtime" → <b>RTO</b></li>
+          <li>"average between failures" → <b>MTBF</b></li>
+          <li>"average to repair" → <b>MTTR</b></li>
+        </ul>
+      </div>
+    `
+  },
+  {
+    id: 'incident-response', domain: '4', name: 'Incident Response Process',
+    content: `
+      <h2>Incident Response Phases</h2>
+      <div class="domain-pill">DOMAIN 4.8</div>
+      <p>NIST's six-phase IR cycle. CompTIA loves "what is the NEXT step" questions — you need to know the order.</p>
+
+      <div class="concept-section">
+        <h3>1. Preparation</h3>
+        <ul>
+          <li>Policies, playbooks, training</li>
+          <li>IR team contacts and roles</li>
+          <li>Tools deployed (SIEM, EDR, forensic kits)</li>
+          <li>Tabletop exercises</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>2. Identification (Detection &amp; Analysis)</h3>
+        <ul>
+          <li>Recognize that an incident is occurring</li>
+          <li>Sources: SIEM alerts, user reports, IDS, antivirus, threat intel</li>
+          <li>Triage and classify severity</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>3. Containment</h3>
+        <ul>
+          <li>Stop the bleeding — short-term and long-term containment</li>
+          <li>Isolate affected systems (disconnect from network, segment)</li>
+          <li>Sandbox suspected malware for safe analysis</li>
+          <li>Preserve evidence (chain of custody)</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>4. Eradication</h3>
+        <ul>
+          <li>Remove malware, malicious accounts, backdoors</li>
+          <li>Patch the exploited vulnerability</li>
+          <li>Verify nothing malicious remains</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>5. Recovery</h3>
+        <ul>
+          <li>Rebuild systems from known-good media</li>
+          <li>Restore data from backups</li>
+          <li>Bring services back online and monitor closely</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>6. Lessons Learned</h3>
+        <ul>
+          <li>Post-incident review with all stakeholders</li>
+          <li>What worked, what didn't, what changes are needed</li>
+          <li>Update playbooks, controls, training</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Mnemonic</h3>
+        <p><b>PICERL</b> — Preparation, Identification, Containment, Eradication, Recovery, Lessons learned.</p>
+      </div>
+
+      <div class="concept-section">
+        <h3>NEXT-step pattern</h3>
+        <p>If the question says "we just detected" → <b>Containment</b> is next. If "we just isolated" → <b>Eradication</b>. If "we just cleaned the malware" → <b>Recovery</b>. If "everything is back" → <b>Lessons Learned</b>.</p>
+      </div>
+    `
+  },
+  {
+    id: 'crypto-basics', domain: '1', name: 'Symmetric vs Asymmetric Crypto',
+    content: `
+      <h2>Cryptography Foundations</h2>
+      <div class="domain-pill">DOMAIN 1.4</div>
+
+      <div class="concept-section">
+        <h3>Symmetric Encryption</h3>
+        <p>One <b>shared</b> key for both encryption and decryption.</p>
+        <ul>
+          <li><b>Pros:</b> Fast. Good for bulk data.</li>
+          <li><b>Cons:</b> How do you safely share the key?</li>
+          <li><b>Examples:</b> AES (128/192/256), ChaCha20, 3DES (legacy), DES (broken)</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Asymmetric Encryption</h3>
+        <p>A <b>key pair</b>: one public (shareable freely), one private (kept secret).</p>
+        <ul>
+          <li>Encrypt with the recipient's <b>public</b> key → only they can decrypt (with their private)</li>
+          <li>Sign with your <b>private</b> key → anyone can verify (with your public)</li>
+          <li><b>Pros:</b> No pre-shared secret needed</li>
+          <li><b>Cons:</b> Much slower than symmetric</li>
+          <li><b>Examples:</b> RSA, ECC (smaller keys, same strength), Diffie-Hellman</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Hybrid (real world)</h3>
+        <p>TLS uses both: asymmetric to safely exchange a symmetric session key, then symmetric for the bulk data. Best of both worlds.</p>
+      </div>
+
+      <div class="concept-section">
+        <h3>Hashing — a different beast</h3>
+        <p>One-way function: fixed-size output, can't be reversed, no key. Use for <b>integrity</b>, not confidentiality.</p>
+        <ul>
+          <li><b>SHA-256, SHA-3</b> — current standard</li>
+          <li><b>SHA-1</b> — broken (collisions)</li>
+          <li><b>MD5</b> — broken (do not use for security)</li>
+          <li><b>HMAC</b> — hash + secret key = integrity + authentication</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Key concepts</h3>
+        <ul>
+          <li><b>Digital signature</b> — sign with private, verify with public. Proves integrity + origin (non-repudiation).</li>
+          <li><b>Key exchange</b> — Diffie-Hellman (DH), ECDH, with Ephemeral (DHE/ECDHE) variants providing Perfect Forward Secrecy</li>
+          <li><b>Perfect Forward Secrecy (PFS)</b> — even if long-term key is later stolen, past sessions stay safe</li>
+          <li><b>Salt</b> — random data added before hashing passwords to defeat rainbow tables</li>
+          <li><b>PBKDF2 / bcrypt / argon2</b> — slow hashing for passwords (defeats brute force)</li>
+        </ul>
+      </div>
+    `
+  },
+  {
+    id: 'access-control', domain: '4', name: 'Access Control Models',
+    content: `
+      <h2>Access Control Models — MAC, DAC, RBAC, ABAC</h2>
+      <div class="domain-pill">DOMAIN 4.6</div>
+      <p>Four models. You need to know which one matches a scenario instantly.</p>
+
+      <div class="concept-section">
+        <h3>MAC — Mandatory Access Control</h3>
+        <ul>
+          <li>The <b>system</b> enforces access based on <b>security labels</b> (e.g., Top Secret, Secret, Confidential)</li>
+          <li>Users <b>cannot</b> change permissions, even on their own files</li>
+          <li>Common in military, government, and high-security environments</li>
+          <li>Implementations: SELinux, Windows MIC</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>DAC — Discretionary Access Control</h3>
+        <ul>
+          <li>The <b>owner</b> of a resource decides who can access</li>
+          <li>"Right-click → Properties → Security" on Windows is DAC</li>
+          <li>Flexible but easy to over-share</li>
+          <li>Default in most consumer OSes</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>RBAC — Role-Based Access Control</h3>
+        <ul>
+          <li>Access tied to <b>job role</b>, not individuals</li>
+          <li>"Engineers" can deploy; "Sales" can read CRM; "Finance" can run payroll</li>
+          <li>Easier to manage at scale than naming individuals</li>
+          <li>Onboarding: assign role; offboarding: remove from role</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>ABAC — Attribute-Based Access Control</h3>
+        <ul>
+          <li>Access based on multiple <b>attributes</b>: user (department, clearance), resource (sensitivity, owner), action (read/write), environment (time of day, location, device)</li>
+          <li>Most flexible — also most complex to design</li>
+          <li>Example: "Engineering staff on company laptops can read source code from the office network during business hours"</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Bonus: Rule-Based (RuBAC)</h3>
+        <ul>
+          <li>Access based on <b>rules</b> regardless of identity (firewall ACL, time-of-day restrictions for everyone)</li>
+          <li>Don't confuse with Role-Based — exam loves this trap</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Quick map</h3>
+        <ul>
+          <li>"Labels enforced by system" → <b>MAC</b></li>
+          <li>"Owner decides" → <b>DAC</b></li>
+          <li>"Job role" → <b>RBAC</b></li>
+          <li>"Multiple conditions / attributes" → <b>ABAC</b></li>
+          <li>"Same rule for everyone" → <b>Rule-Based (RuBAC)</b></li>
+        </ul>
+      </div>
+    `
+  },
+  {
+    id: 'agreements', domain: '5', name: 'Agreement Types (MOU/MOA/SLA/SOW/MSA/NDA/BPA)',
+    content: `
+      <h2>Agreement Types</h2>
+      <div class="domain-pill">DOMAIN 5.3</div>
+      <p>CompTIA loves quizzing the agreement family. Memorize the one-line differences.</p>
+
+      <div class="concept-section">
+        <h3>MOU — Memorandum of Understanding</h3>
+        <ul>
+          <li>Informal "letter of intent" — both parties agree they intend to work together</li>
+          <li>Often non-binding</li>
+          <li>Used early in a partnership exploration</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>MOA — Memorandum of Agreement</h3>
+        <ul>
+          <li>More formal than MOU</li>
+          <li>States broad <b>goals and objectives</b> both parties agree to</li>
+          <li>Used to qualify or formalize an ongoing partnership</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>SLA — Service Level Agreement</h3>
+        <ul>
+          <li>Specifies <b>measurable</b> service commitments</li>
+          <li>Uptime % (99.9%), response time, MTTR</li>
+          <li>Has consequences (credits, penalties) for missing targets</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>MSA — Master Service Agreement</h3>
+        <ul>
+          <li>Umbrella legal contract between two parties</li>
+          <li>Covers general terms: payment, liability, IP, confidentiality</li>
+          <li>SOWs operate <b>under</b> an MSA</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>SOW — Statement of Work</h3>
+        <ul>
+          <li>Specific <b>deliverables</b>, timeline, milestones for a project</li>
+          <li>"Install and configure these 12 firewalls by March 1"</li>
+          <li>Lives under an MSA</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>NDA — Non-Disclosure Agreement</h3>
+        <ul>
+          <li>Confidentiality only</li>
+          <li>Doesn't establish any other terms of a relationship</li>
+          <li>Can be mutual or one-way</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>BPA — Business Partnership Agreement</h3>
+        <ul>
+          <li>For going into business together as partners</li>
+          <li>Defines ownership shares, responsibilities, profit/loss split, exit terms</li>
+        </ul>
+      </div>
+
+      <div class="concept-section">
+        <h3>Quick map</h3>
+        <ul>
+          <li>"Just letting you know we're working together" → <b>MOU</b></li>
+          <li>"Broad goals, formal" → <b>MOA</b></li>
+          <li>"Uptime guarantee / response time" → <b>SLA</b></li>
+          <li>"Umbrella legal contract" → <b>MSA</b></li>
+          <li>"Specific deliverables for this project" → <b>SOW</b></li>
+          <li>"Confidentiality" → <b>NDA</b></li>
+          <li>"Becoming business partners" → <b>BPA</b></li>
+        </ul>
+      </div>
+    `
+  }
+];
+
+/* ============================================================
+   STATE & PERSISTENCE (localStorage)
+   ============================================================ */
+
+const STORE_KEY = 'secplus701_state_v1';
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { console.warn('Failed to load state:', e); }
+  return {
+    answers: {}, // qid -> { correct: bool, lastSeen: ts }
+    flashProgress: {}, // front -> { level: 0|1|2, lastSeen }
+    domainStats: { '1': { correct: 0, total: 0 }, '2': { correct: 0, total: 0 },
+                   '3': { correct: 0, total: 0 }, '4': { correct: 0, total: 0 },
+                   '5': { correct: 0, total: 0 } },
+    totalAnswered: 0,
+    totalCorrect: 0
+  };
+}
+
+function saveState() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  catch (e) { console.warn('Failed to save state:', e); }
+}
+
+/* ============================================================
+   UI helpers
+   ============================================================ */
+
+function $(sel) { return document.querySelector(sel); }
+function $$(sel) { return document.querySelectorAll(sel); }
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function updateMiniStats() {
+  $('#totalAnswered').textContent = state.totalAnswered;
+  const acc = state.totalAnswered > 0
+    ? Math.round((state.totalCorrect / state.totalAnswered) * 100) + '%'
+    : '—';
+  $('#accuracy').textContent = acc;
+}
+
+/* ============================================================
+   TAB NAVIGATION
+   ============================================================ */
+
+$$('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const panel = btn.dataset.panel;
+    $$('.tab').forEach(t => t.classList.remove('active'));
+    $$('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    $('#panel-' + panel).classList.add('active');
+    if (panel === 'stats') renderStats();
+    if (panel === 'concepts') renderConceptList();
+  });
+});
+
+function showPanel(name) {
+  $$('.tab').forEach(t => t.classList.remove('active'));
+  $$('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab[data-panel="${name}"]`).classList.add('active');
+  $('#panel-' + name).classList.add('active');
+}
+
+/* ============================================================
+   QUIZ
+   ============================================================ */
+
+let quiz = null;
+
+function renderDomainList() {
+  const html = Object.entries(DOMAINS).map(([id, d]) => {
+    const count = QUESTIONS.filter(q => q.domain === id).length;
+    return `
+      <label class="domain-item">
+        <input type="checkbox" value="${id}" checked>
+        <div class="domain-label">
+          <div class="domain-name">${d.name}</div>
+          <div class="domain-meta">${d.weight}% of exam · ${count} questions in bank</div>
+        </div>
+      </label>
+    `;
+  }).join('');
+  $('#domainList').innerHTML = html;
+}
+
+$('#startQuizBtn').addEventListener('click', () => {
+  const selectedDomains = Array.from($$('#domainList input:checked')).map(i => i.value);
+  if (selectedDomains.length === 0) { alert('Pick at least one domain.'); return; }
+  const num = parseInt($('#numQuestions').value, 10);
+  const mode = $('#modeSel').value;
+
+  let pool = QUESTIONS.filter(q => selectedDomains.includes(q.domain));
+  if (mode === 'weak') {
+    pool = pool.filter(q => state.answers[q.id] && state.answers[q.id].correct === false);
+    if (pool.length === 0) {
+      alert('No missed questions yet — go answer some first!');
+      return;
+    }
+  }
+
+  const questions = shuffle(pool).slice(0, Math.min(num, pool.length));
+  quiz = {
+    questions, current: 0, correct: 0, mode,
+    startTime: Date.now(), missed: [], answered: []
+  };
+  $('#quiz-setup').style.display = 'none';
+  $('#quiz-results').style.display = 'none';
+  $('#quiz-active').style.display = 'block';
+  renderQuizQuestion();
+});
+
+function renderQuizQuestion() {
+  const q = quiz.questions[quiz.current];
+  $('#qNum').textContent = `Question ${quiz.current + 1}/${quiz.questions.length}`;
+  $('#qDomain').textContent = DOMAINS[q.domain].name.split(' ')[0] + ' · ' + q.topic;
+  $('#qText').textContent = q.text;
+  $('#progressFill').style.width = ((quiz.current) / quiz.questions.length * 100) + '%';
+
+  // Shuffle options but track correct answer
+  const opts = q.options.map((text, idx) => ({ text, originalIdx: idx }));
+  const shuffled = shuffle(opts);
+  quiz.currentShuffled = shuffled;
+
+  $('#qOptions').innerHTML = shuffled.map((o, i) => `
+    <div class="option" data-idx="${i}" data-orig="${o.originalIdx}">
+      <span class="letter">${String.fromCharCode(65 + i)}</span>
+      <span class="opt-text">${o.text}</span>
+    </div>
+  `).join('');
+
+  $('#qExplanation').style.display = 'none';
+  $('#qExplanation').innerHTML = '';
+  $('#nextQBtn').style.display = 'none';
+
+  $$('#qOptions .option').forEach(el => {
+    el.addEventListener('click', () => handleAnswer(el));
+  });
+}
+
+function handleAnswer(el) {
+  if (el.classList.contains('locked')) return;
+  $$('#qOptions .option').forEach(o => o.classList.add('locked'));
+
+  const q = quiz.questions[quiz.current];
+  const chosenOrig = parseInt(el.dataset.orig, 10);
+  const isCorrect = chosenOrig === q.answer;
+
+  // Find the correct option in shuffled order to highlight
+  const correctEl = document.querySelector(`#qOptions .option[data-orig="${q.answer}"]`);
+
+  if (isCorrect) {
+    el.classList.add('correct');
+    quiz.correct++;
+  } else {
+    el.classList.add('wrong');
+    correctEl.classList.add('correct');
+    quiz.missed.push(q);
+  }
+
+  // Update persistent state
+  state.answers[q.id] = { correct: isCorrect, lastSeen: Date.now() };
+  state.totalAnswered++;
+  if (isCorrect) state.totalCorrect++;
+  state.domainStats[q.domain].total++;
+  if (isCorrect) state.domainStats[q.domain].correct++;
+  saveState();
+  updateMiniStats();
+
+  quiz.answered.push({ q, correct: isCorrect });
+
+  // Show explanation in study mode
+  if (quiz.mode !== 'exam') {
+    renderExplanation(q, chosenOrig, isCorrect);
+  }
+  $('#nextQBtn').style.display = 'block';
+  $('#nextQBtn').textContent = quiz.current === quiz.questions.length - 1 ? 'See Results →' : 'Next →';
+}
+
+function renderExplanation(q, chosenOrig, isCorrect) {
+  const expl = $('#qExplanation');
+  let html = `
+    <div class="explanation">
+      <div class="label">${isCorrect ? '✓ Correct' : '✗ Incorrect'}</div>
+      <strong>${q.options[q.answer]}</strong>
+      <p style="margin: 8px 0 0;">${q.explanation}</p>
+  `;
+  if (q.distractors) {
+    const wrongs = Object.entries(q.distractors).filter(([k, v]) => v && parseInt(k) !== q.answer);
+    if (wrongs.length > 0) {
+      html += '<div class="why-wrong"><b>Why the others are wrong:</b><br>';
+      wrongs.forEach(([idx, txt]) => {
+        html += `<div style="margin-top:6px;"><b>${q.options[parseInt(idx)]}</b> — ${txt}</div>`;
+      });
+      html += '</div>';
+    }
+  }
+  html += '</div>';
+  expl.innerHTML = html;
+  expl.style.display = 'block';
+}
+
+$('#nextQBtn').addEventListener('click', () => {
+  quiz.current++;
+  if (quiz.current >= quiz.questions.length) {
+    finishQuiz();
+  } else {
+    renderQuizQuestion();
+  }
+});
+
+$('#quitQuizBtn').addEventListener('click', () => {
+  if (confirm('Quit the quiz? Your progress so far is saved.')) {
+    $('#quiz-active').style.display = 'none';
+    $('#quiz-setup').style.display = 'block';
+  }
+});
+
+function finishQuiz() {
+  $('#quiz-active').style.display = 'none';
+  $('#quiz-results').style.display = 'block';
+  $('#progressFill').style.width = '100%';
+
+  const score = Math.round((quiz.correct / quiz.questions.length) * 100);
+  const minutes = ((Date.now() - quiz.startTime) / 1000 / 60);
+  const paceSec = Math.round((Date.now() - quiz.startTime) / 1000 / quiz.questions.length);
+
+  $('#resultScore').textContent = score + '%';
+  $('#resultCorrect').textContent = quiz.correct;
+  $('#resultTotal').textContent = quiz.questions.length;
+  $('#resultPace').textContent = paceSec + 's';
+
+  // breakdown by domain
+  const byDomain = {};
+  quiz.answered.forEach(a => {
+    const d = a.q.domain;
+    if (!byDomain[d]) byDomain[d] = { correct: 0, total: 0 };
+    byDomain[d].total++;
+    if (a.correct) byDomain[d].correct++;
+  });
+  $('#resultBreakdown').innerHTML = Object.entries(byDomain).map(([d, s]) => `
+    <div class="stat-box">
+      <div class="stat-num">${Math.round(s.correct / s.total * 100)}%</div>
+      <div class="stat-label">Dom ${d}<br>${s.correct}/${s.total}</div>
+    </div>
+  `).join('');
+}
+
+$('#newQuizBtn').addEventListener('click', () => {
+  $('#quiz-results').style.display = 'none';
+  $('#quiz-setup').style.display = 'block';
+});
+
+$('#reviewMissedBtn').addEventListener('click', () => {
+  if (quiz.missed.length === 0) { alert('No missed questions — great job!'); return; }
+  quiz = {
+    questions: quiz.missed, current: 0, correct: 0, mode: 'study',
+    startTime: Date.now(), missed: [], answered: []
+  };
+  $('#quiz-results').style.display = 'none';
+  $('#quiz-active').style.display = 'block';
+  renderQuizQuestion();
+});
+
+/* ============================================================
+   QUICK MODE BUTTONS (home)
+   ============================================================ */
+
+$$('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const mode = btn.dataset.quick;
+    showPanel(mode === 'flash' ? 'flashcards' : 'quiz');
+    if (mode === 'quiz-all') {
+      $$('#domainList input').forEach(i => i.checked = true);
+      $('#numQuestions').value = '10';
+      $('#modeSel').value = 'study';
+      $('#startQuizBtn').click();
+    } else if (mode === 'quiz-weak') {
+      $$('#domainList input').forEach(i => i.checked = true);
+      $('#numQuestions').value = '20';
+      $('#modeSel').value = 'weak';
+      $('#startQuizBtn').click();
+    } else if (mode === 'exam') {
+      $$('#domainList input').forEach(i => i.checked = true);
+      $('#numQuestions').value = '90';
+      $('#modeSel').value = 'exam';
+      $('#startQuizBtn').click();
+    } else if (mode === 'flash') {
+      $('#startFlashBtn').click();
+    }
+  });
+});
+
+/* ============================================================
+   FLASHCARDS
+   ============================================================ */
+
+let flash = null;
+
+$('#startFlashBtn').addEventListener('click', () => {
+  const cat = $('#flashCat').value;
+  let cards = FLASHCARDS;
+  if (cat !== 'all') cards = cards.filter(c => c.cat === cat);
+  if (cards.length === 0) { alert('No cards in this category.'); return; }
+  flash = { cards: shuffle(cards), current: 0, flipped: false };
+  $('#startFlashBtn').parentElement.parentElement.style.display = 'none';
+  $('#flash-active').style.display = 'block';
+  renderFlashcard();
+});
+
+function renderFlashcard() {
+  const c = flash.cards[flash.current];
+  $('#flashFront').textContent = c.front;
+  $('#flashBack').textContent = c.back;
+  $('#flashNum').textContent = `Card ${flash.current + 1}/${flash.cards.length}`;
+  $('#flashCatLabel').textContent = c.cat.toUpperCase();
+  $('#flashDom').textContent = c.cat;
+  $('#flashcard').classList.remove('flipped');
+  flash.flipped = false;
+}
+
+$('#flashcard').addEventListener('click', () => {
+  $('#flashcard').classList.toggle('flipped');
+  flash.flipped = !flash.flipped;
+});
+
+function nextFlash(level) {
+  const c = flash.cards[flash.current];
+  state.flashProgress[c.front] = { level, lastSeen: Date.now() };
+  saveState();
+  flash.current++;
+  if (flash.current >= flash.cards.length) {
+    alert(`Done! You went through ${flash.cards.length} cards.`);
+    $('#flash-active').style.display = 'none';
+    $('#startFlashBtn').parentElement.parentElement.style.display = 'block';
+    return;
+  }
+  renderFlashcard();
+}
+
+$('#flashHardBtn').addEventListener('click', () => nextFlash(0));
+$('#flashOkBtn').addEventListener('click', () => nextFlash(1));
+$('#flashEasyBtn').addEventListener('click', () => nextFlash(2));
+$('#quitFlashBtn').addEventListener('click', () => {
+  $('#flash-active').style.display = 'none';
+  $('#startFlashBtn').parentElement.parentElement.style.display = 'block';
+});
+
+/* ============================================================
+   CONCEPTS
+   ============================================================ */
+
+function renderConceptList() {
+  $('#conceptDetail').style.display = 'none';
+  $('#conceptList').parentElement.style.display = 'block';
+  $('#conceptList').innerHTML = CONCEPTS.map(c => `
+    <div class="concept-item" data-id="${c.id}">
+      <span class="concept-name">${c.name}</span>
+      <span class="concept-domain">DOM ${c.domain}</span>
+    </div>
+  `).join('');
+  $$('.concept-item').forEach(el => {
+    el.addEventListener('click', () => showConcept(el.dataset.id));
+  });
+}
+
+function showConcept(id) {
+  const c = CONCEPTS.find(x => x.id === id);
+  if (!c) return;
+  $('#conceptList').parentElement.style.display = 'none';
+  $('#conceptDetail').style.display = 'block';
+  $('#conceptDetail').innerHTML = `
+    <div class="card">
+      ${c.content}
+      <button class="btn secondary" id="backToConcepts" style="margin-top: 16px;">← All concepts</button>
+    </div>
+  `;
+  $('#backToConcepts').addEventListener('click', renderConceptList);
+}
+
+/* ============================================================
+   STATS
+   ============================================================ */
+
+function renderStats() {
+  const acc = state.totalAnswered > 0
+    ? Math.round((state.totalCorrect / state.totalAnswered) * 100)
+    : 0;
+  const missed = Object.values(state.answers).filter(a => !a.correct).length;
+  const flashed = Object.keys(state.flashProgress).length;
+
+  $('#statsGrid').innerHTML = `
+    <div class="stat-box">
+      <div class="stat-num">${state.totalAnswered}</div>
+      <div class="stat-label">Total answered</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">${acc}%</div>
+      <div class="stat-label">Accuracy</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">${missed}</div>
+      <div class="stat-label">In weak pool</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">${flashed}</div>
+      <div class="stat-label">Cards reviewed</div>
+    </div>
+  `;
+
+  let domHtml = '';
+  Object.entries(DOMAINS).forEach(([id, d]) => {
+    const s = state.domainStats[id];
+    const pct = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
+    const color = pct >= 80 ? 'var(--green)' : pct >= 60 ? 'var(--accent)' : 'var(--red)';
+    domHtml += `
+      <div style="margin-bottom: 14px;">
+        <div style="display:flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.9rem;">
+          <span>${d.name}</span>
+          <span style="font-family: 'JetBrains Mono', monospace; color: ${color};">
+            ${s.correct}/${s.total} · ${pct}%
+          </span>
+        </div>
+        <div class="progress">
+          <div class="progress-fill" style="width: ${pct}%; background: ${color};"></div>
+        </div>
+      </div>
+    `;
+  });
+  $('#domainStats').innerHTML = domHtml;
+}
+
+$('#resetBtn').addEventListener('click', () => {
+  if (confirm('Erase all progress? This cannot be undone.')) {
+    localStorage.removeItem(STORE_KEY);
+    state = loadState();
+    updateMiniStats();
+    renderStats();
+    alert('Progress reset.');
+  }
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+renderDomainList();
+updateMiniStats();
+</script>
+</body>
+</html>
